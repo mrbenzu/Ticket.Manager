@@ -1,4 +1,4 @@
-# Ticket Manager - 
+# Ticket Manager
 
 Microservices-based .NET Application with Clean Architecture, CQRS, DDD, and Event Storming
 
