@@ -18,7 +18,7 @@ Welcome to our microservices-based application! This project is designed using i
 
 ### Testing and Quality Assurance:
 
-- **Unit Tests:** We have comprehensive unit tests in place to ensure the correctness of individual components and functionalities within each microservice.
+- **Unit Tests:** We have comprehensive unit tests in place to ensure the correctness of individual business logic use cases and functionalities within each microservice.
 
 - **Integration Tests:** Integration tests are performed to validate the interaction and behavior of multiple microservices working together.
 
