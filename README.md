@@ -2,7 +2,7 @@
 
 Microservices-based .NET Application with Clean Architecture, CQRS, DDD, and Event Storming
 
-# Main goals
+# 1. Main goals
 
 Welcome to our microservices-based application! This project is designed using industry-proven methodologies and practices such as Clean Architecture, Command Query Responsibility Segregation (CQRS), Domain Driven Design (DDD), and Event Storming. Our goal is to deliver a robust, scalable, and maintainable solution that aligns with modern software development principles.
 
@@ -43,7 +43,7 @@ Welcome to our microservices-based application! This project is designed using i
 Thank you for exploring our microservices-based application! We welcome contributions, feedback, and suggestions to make this project even better. Let's build something great together!
 
 
-# Requirements for Online Ticket Selling System
+# 2. Requirements for Online Ticket Selling System
 
 ## User Account Management Functionality
 - Create a user account.
@@ -86,4 +86,13 @@ Thank you for exploring our microservices-based application! We welcome contribu
 - The system should be scalable to handle high traffic during popular events.
 - Optimization of application performance for fast page loading and smooth ticket purchasing process.
 
+# 3. Roadmap
 
+List of tasks
+
+| Nr. | Task              | Completed | Completion Date |
+|-----|-------------------|-----------|-----------------|
+| 1   | Add Events module |        |      |
+| 2   | Add Seats module  |       |                 |
+| 3   | Add Order module  |       |                 |
+| 4   | ....  |       |                 |
