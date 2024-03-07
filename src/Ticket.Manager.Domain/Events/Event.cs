@@ -6,7 +6,7 @@ namespace Ticket.Manager.Domain.Events;
 
 public class Event : Entity, IAggregateRoot
 {
-    public Guid Id { get; private set; }
+    public Guid Id { get; init; }
     
     public string Name { get; private set; }
     
@@ -42,6 +42,16 @@ public class Event : Entity, IAggregateRoot
     public static Result<Event> Create(string name, DateTime startDate, DateTime startOfSalesDate, long placeId, SeatMap seatMap)
     {
         var id = Guid.NewGuid();
+        
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return Result<Event>.Failure(EventErrors.InvalidName);
+        }        
+        
+        if (startOfSalesDate < startDate)
+        {
+            return Result<Event>.Failure(EventErrors.StartOfSalesDateIsEarlierThanStartDate);
+        }
         
         var @event = new Event(id, name, startDate, startOfSalesDate, placeId, seatMap);
         @event.AddDomainEvent(new EventCreatedDomainEvent(@event.Id, @event.SeatMap));
@@ -86,5 +96,31 @@ public class Event : Entity, IAggregateRoot
         AddDomainEvent(new EventCanceledEvent(Id));
         
         return Result.Success();
+    }
+
+    public Result ChangeName(string name)
+    {
+        if (string.IsNullOrWhiteSpace(name))
+        {
+            return Result.Failure(EventErrors.InvalidName);
+        }
+
+        Name = name;
+
+        return Result.Success();
+    }
+
+    public Result ChangeStartDate(DateTime startDate)
+    {
+        StartDate = startDate;
+    
+        return Result.Success();
+    }
+    
+    public Result ChangeStartOfSalesDate(DateTime startOfSalesDate)
+    {
+        return startOfSalesDate < StartDate 
+            ? Result.Failure(EventErrors.StartOfSalesDateIsEarlierThanStartDate) 
+            : Result.Success();
     }
 }
