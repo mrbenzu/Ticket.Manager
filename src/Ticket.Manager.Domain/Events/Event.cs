@@ -1,5 +1,6 @@
 ﻿using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Common.Domain;
+using Ticket.Manager.Domain.Events.Events;
 
 namespace Ticket.Manager.Domain.Events;
 
@@ -37,21 +38,17 @@ public class Event : Entity, IAggregateRoot
         IsCanceled = false;
         IsSuspended = false;
     }
+    
     public static Result<Event> Create(string name, DateTime startDate, DateTime startOfSalesDate, long placeId, SeatMap seatMap)
     {
         var id = Guid.NewGuid();
+        
         var @event = new Event(id, name, startDate, startOfSalesDate, placeId, seatMap);
+        @event.AddDomainEvent(new EventCreatedDomainEvent(@event.Id, @event.SeatMap));
 
         return Result.Success(@event);
     }
-
-    public Result Cancel()
-    {
-        IsCanceled = true; 
-        
-        return Result.Success();
-    }
-
+    
     public Result Suspend()
     {
         if (IsCanceled)
@@ -60,6 +57,33 @@ public class Event : Entity, IAggregateRoot
         }
         
         IsSuspended = true;
+        AddDomainEvent(new EventSuspendedEvent(Id));
+        
+        return Result.Success();
+    }
+    
+    public Result Reopen()
+    {
+        if (IsCanceled)
+        {
+            return Result.Failure(EventErrors.IsCanceled);
+        }
+        
+        IsSuspended = true;
+        AddDomainEvent(new EventReopenedEvent(Id));
+        
+        return Result.Success();
+    }
+    
+    public Result Cancel()
+    {
+        if (IsCanceled)
+        {
+            return Result.Failure(EventErrors.IsCanceled);
+        }
+
+        IsCanceled = true;
+        AddDomainEvent(new EventCanceledEvent(Id));
         
         return Result.Success();
     }
