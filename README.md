@@ -58,7 +58,6 @@ Thank you for exploring our microservices-based application! We welcome contribu
 ## Ticket Purchase Functionality
 - Add tickets to the cart.
 - Select ticket types (e.g., standard, VIP, group).
-- Online payment process (using various payment methods).
 - Purchase confirmation.
 
 ## Ticket Reservation Functionality
@@ -81,10 +80,6 @@ Thank you for exploring our microservices-based application! We welcome contribu
 ## Support for Multiple Locations
 - Ability to add events taking place at different locations.
 - Setting unique parameters for each location (e.g., venue capacity, seating maps).
-
-## Performance and Scalability
-- The system should be scalable to handle high traffic during popular events.
-- Optimization of application performance for fast page loading and smooth ticket purchasing process.
 
 # 3. Roadmap
 
