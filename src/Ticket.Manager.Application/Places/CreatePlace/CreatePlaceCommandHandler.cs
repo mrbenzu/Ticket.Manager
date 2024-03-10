@@ -2,7 +2,7 @@
 using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Places;
 
-namespace Ticket.Manager.Application.Places;
+namespace Ticket.Manager.Application.Places.CreatePlace;
 
 public class CreatePlaceCommandHandler(IPlaceRepository placeRepository) : ICommandHandler<CreatePlaceCommand, Result>
 {

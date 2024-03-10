@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Ticket.Manager.Application.Places;
+using Ticket.Manager.Application.Places.CreatePlace;
 using Ticket.Manager.Domain.Common;
 
 namespace Ticket.Manager.API.Places;
