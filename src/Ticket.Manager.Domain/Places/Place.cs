@@ -14,7 +14,7 @@ public class Place : IAggregateRoot
     public SeatMap SeatMap { get; private set; }
 
     // EF
-    public Place()
+    private Place()
     {
         
     }
