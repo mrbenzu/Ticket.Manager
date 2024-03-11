@@ -40,8 +40,6 @@ Welcome to our microservices-based application! This project is designed using i
 
 - **Flexibility:** Our architecture allows for flexibility in adapting to changing business requirements and integrating new features seamlessly.
 
-Thank you for exploring our microservices-based application! We welcome contributions, feedback, and suggestions to make this project even better. Let's build something great together!
-
 
 # 2. Requirements for Online Ticket Selling System
 
