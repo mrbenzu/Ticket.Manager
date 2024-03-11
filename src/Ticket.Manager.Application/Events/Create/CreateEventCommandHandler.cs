@@ -17,7 +17,8 @@ public class CreateEventCommandHandler(IEventRepository eventRepository, IPlaceR
             return Result.Failure(EventApplicationErrors.PlaceDoesntExist);
         }
 
-        var seatMap = new SeatMap(place.SeatMap.NoNumericPlaceCount, 
+        var seatMap = new SeatMap(place.SeatMap.NoNumericPlaceCount,
+            place.SeatMap.SectorCount,
             place.SeatMap.RowsCount,
             place.SeatMap.SeatsInRowCount);
         
