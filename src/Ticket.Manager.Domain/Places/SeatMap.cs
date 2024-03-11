@@ -16,7 +16,7 @@ public class SeatMap : Entity
         SeatsInRowCount = seatsInRowCount;  
     }
 
-    public static SeatMap Create(int noNumericPlaceCount, int rowsCount, int seatsInRowCount)
+    public static SeatMap Create(int noNumericPlaceCount, int sectorCount, int rowsCount, int seatsInRowCount)
     {
         return new SeatMap(noNumericPlaceCount, rowsCount, seatsInRowCount);
     }

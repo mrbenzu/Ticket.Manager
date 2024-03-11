@@ -29,12 +29,12 @@ public class Place : IAggregateRoot
 
     public static Result<Place> Create(string name, 
         string street, string number, string city, 
-        int noNumericPlaceCount, int rowsCount, int seatsInRowCount)
+        int noNumericPlaceCount, int sectorCount, int rowsCount, int seatsInRowCount)
     {
         var id = Guid.NewGuid();
         
         var address = new Address(street, number, city);
-        var seatsMap = SeatMap.Create(noNumericPlaceCount, rowsCount, seatsInRowCount);
+        var seatsMap = SeatMap.Create(noNumericPlaceCount, sectorCount, rowsCount, seatsInRowCount);
         
         var place = new Place(id, name, address, seatsMap);
 
