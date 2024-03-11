@@ -1,7 +1,7 @@
 ﻿using Ticket.Manager.Application.Common;
 using Ticket.Manager.Application.Seats.Errors;
 using Ticket.Manager.Domain.Common;
-using Ticket.Manager.Domain.Places;
+using Ticket.Manager.Domain.Seats;
 
 namespace Ticket.Manager.Application.Seats.Reserve;
 
