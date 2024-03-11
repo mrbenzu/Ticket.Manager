@@ -10,7 +10,7 @@ public class Event : Entity, IAggregateRoot
     
     public string Name { get; private set; }
     
-    public long PlaceId { get; private set; }
+    public Guid PlaceId { get; private set; }
     
     public SeatMap SeatMap { get; private set; }
     
@@ -27,7 +27,7 @@ public class Event : Entity, IAggregateRoot
         // EF
     }
 
-    private Event(Guid id, string name, DateTime startDate, DateTime startOfSalesDate, long placeId, SeatMap seatMap)
+    private Event(Guid id, string name, DateTime startDate, DateTime startOfSalesDate, Guid placeId, SeatMap seatMap)
     {
         Id = id;
         Name = name;
@@ -39,7 +39,7 @@ public class Event : Entity, IAggregateRoot
         IsSuspended = false;
     }
     
-    public static Result<Event> Create(string name, DateTime startDate, DateTime startOfSalesDate, long placeId, SeatMap seatMap)
+    public static Result<Event> Create(string name, DateTime startDate, DateTime startOfSalesDate, Guid placeId, SeatMap seatMap)
     {
         var id = Guid.NewGuid();
         
