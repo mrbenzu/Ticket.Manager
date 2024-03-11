@@ -2,4 +2,4 @@
 
 namespace Ticket.Manager.Domain.Events;
 
-public record SeatMap(int NoNumericPlaceCount, int RowsCount, int SeatsInRowCount) : ValueObject;
+public record SeatMap(int NoNumericPlaceCount, int sectorCount, int RowsCount, int SeatsInRowCount) : ValueObject;
