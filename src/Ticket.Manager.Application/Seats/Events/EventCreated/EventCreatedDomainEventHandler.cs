@@ -2,7 +2,7 @@
 using Ticket.Manager.Domain.Events.Events;
 using Ticket.Manager.Domain.Seats;
 
-namespace Ticket.Manager.Application.Seats.EventCreatedEvent;
+namespace Ticket.Manager.Application.Seats.Events.EventCreated;
 
 public class EventCreatedDomainEventHandler(ISeatRepository seatRepository) : IDomainEventHandler<EventCreatedDomainEvent>
 {

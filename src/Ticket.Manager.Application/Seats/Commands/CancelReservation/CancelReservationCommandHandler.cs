@@ -3,11 +3,11 @@ using Ticket.Manager.Application.Seats.Errors;
 using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Seats;
 
-namespace Ticket.Manager.Application.Seats.WithdrawnSeat;
+namespace Ticket.Manager.Application.Seats.Commands.CancelReservation;
 
-public class WithdrawnSeatCommandHandler(ISeatRepository seatRepository) : ICommandHandler<WithdrawnSeatCommand, Result>
+public class CancelReservationCommandHandler(ISeatRepository seatRepository) : ICommandHandler<CancelReservationCommand, Result>
 {
-    public async Task<Result> Handle(WithdrawnSeatCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(CancelReservationCommand command, CancellationToken cancellationToken)
     {
         var seat = await seatRepository.Get(command.SeatId, cancellationToken);
         if (seat is null)
@@ -15,7 +15,7 @@ public class WithdrawnSeatCommandHandler(ISeatRepository seatRepository) : IComm
             return Result.Failure(SeatApplicationErrors.SeatDoesntExist);
         }
 
-        seat.Withdrawn();
+        seat.CancelReservation();
 
         return Result.Success();
     }

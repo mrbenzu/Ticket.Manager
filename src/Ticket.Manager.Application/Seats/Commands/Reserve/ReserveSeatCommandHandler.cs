@@ -3,7 +3,7 @@ using Ticket.Manager.Application.Seats.Errors;
 using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Seats;
 
-namespace Ticket.Manager.Application.Seats.Reserve;
+namespace Ticket.Manager.Application.Seats.Commands.Reserve;
 
 public class ReserveSeatCommandHandler(ISeatRepository seatRepository) : ICommandHandler<ReserveSeatCommand, Result>
 {
