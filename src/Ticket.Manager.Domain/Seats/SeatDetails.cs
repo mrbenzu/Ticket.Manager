@@ -2,4 +2,4 @@
 
 namespace Ticket.Manager.Domain.Seats;
 
-public record SeatDetails(bool IsNonNumeric, int Sector, int RowNumber, int SeatNumber) : ValueObject;
+public record SeatDetails(bool IsUnnumberedSeat, int Sector, int RowNumber, int SeatNumber) : ValueObject;

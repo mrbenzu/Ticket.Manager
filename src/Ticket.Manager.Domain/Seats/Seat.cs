@@ -44,10 +44,10 @@ public class Seat : IAggregateRoot
         IsSold = false;
     }
 
-    public static Result<Seat> Create(Guid eventId, bool isNonNumeric, int sector, int rowNumber, int seatNumber)
+    public static Result<Seat> Create(Guid eventId, bool isUnnumberedSeat, int sector, int rowNumber, int seatNumber)
     {
         var id = Guid.NewGuid();
-        var seatDetails = new SeatDetails(isNonNumeric, sector, rowNumber, seatNumber);
+        var seatDetails = new SeatDetails(isUnnumberedSeat, sector, rowNumber, seatNumber);
         
         var seat = new Seat(id, eventId, seatDetails);
         
@@ -66,7 +66,7 @@ public class Seat : IAggregateRoot
             return Result.Failure(SeatErrors.IsReserved);
         }
         
-        if (!SeatDetails.IsNonNumeric &&
+        if (!SeatDetails.IsUnnumberedSeat &&
             (reservedSeatNumbersInRow.Any(x => x == SeatDetails.SeatNumber + 2)  ||
             reservedSeatNumbersInRow.Any(x => x == SeatDetails.SeatNumber - 2)))
         {

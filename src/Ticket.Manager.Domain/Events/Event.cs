@@ -12,7 +12,9 @@ public class Event : Entity, IAggregateRoot
     
     public Guid PlaceId { get; private set; }
     
-    public SeatMap SeatMap { get; private set; }
+    public UnnumberedSeatsMap UnnumberedSeatsMap { get; private set; }
+    
+    public SeatsMap SeatsMap { get; private set; }
     
     public DateTime StartDate { get; private set; }
     
@@ -27,19 +29,22 @@ public class Event : Entity, IAggregateRoot
         // EF
     }
 
-    private Event(Guid id, string name, DateTime startDate, DateTime startOfSalesDate, Guid placeId, SeatMap seatMap)
+    private Event(Guid id, string name, DateTime startDate, DateTime startOfSalesDate, Guid placeId, UnnumberedSeatsMap unnumberedSeatsMap, SeatsMap seatsMap)
     {
         Id = id;
         Name = name;
         StartDate = startDate;
         StartOfSalesDate = startOfSalesDate;
         PlaceId = placeId;
-        SeatMap = seatMap;
+        UnnumberedSeatsMap = unnumberedSeatsMap;
+        SeatsMap = seatsMap;
         IsCanceled = false;
         IsSuspended = false;
     }
     
-    public static Result<Event> Create(string name, DateTime startDate, DateTime startOfSalesDate, Guid placeId, SeatMap seatMap)
+    public static Result<Event> Create(string name, DateTime startDate, DateTime startOfSalesDate, Guid placeId, 
+        int unnumberedSeatsSectorCount, int unnumberedSeatsInSectorCount,
+        int sectorCount, int rowsCount, int seatsInRowCount)
     {
         var id = Guid.NewGuid();
         
@@ -53,8 +58,10 @@ public class Event : Entity, IAggregateRoot
             return Result<Event>.Failure(EventErrors.StartOfSalesDateIsEarlierThanStartDate);
         }
         
-        var @event = new Event(id, name, startDate, startOfSalesDate, placeId, seatMap);
-        @event.AddDomainEvent(new EventCreatedDomainEvent(@event.Id, @event.SeatMap));
+        var unnumberedSeatsMap = new UnnumberedSeatsMap(unnumberedSeatsSectorCount, unnumberedSeatsInSectorCount);
+        var seatsMap = new SeatsMap(sectorCount, rowsCount, seatsInRowCount);
+        var @event = new Event(id, name, startDate, startOfSalesDate, placeId, unnumberedSeatsMap, seatsMap);
+        @event.AddDomainEvent(new EventCreatedDomainEvent(@event.Id, @event.UnnumberedSeatsMap, @event.SeatsMap));
 
         return Result.Success(@event);
     }

@@ -16,15 +16,30 @@ public class EventCreatedDomainEventHandler(ISeatRepository seatRepository) : ID
     private static IEnumerable<Seat> GenerateSeats(EventCreatedDomainEvent domainEvent)
     {
         var seats = new List<Seat>();
-        for (var sectorNumber = 1; sectorNumber <= domainEvent.SeatMap.SectorCount; sectorNumber++)
+
+        for (var sectorNumber = 1; sectorNumber <= domainEvent.UnnumberedSeatsMap.SectorCount; sectorNumber++)
         {
-            for (var rowNumber = 1; rowNumber <= domainEvent.SeatMap.RowsCount; rowNumber++)
+            for (var seatNumber = 1; seatNumber <= domainEvent.UnnumberedSeatsMap.SeatsInSectorCount; seatNumber++)
             {
-                for (var seatNumber = 1; seatNumber <= domainEvent.SeatMap.SeatsInRowCount; seatNumber++)
+                var result = Seat.Create(domainEvent.EventId, true, sectorNumber, 0, seatNumber);
+                if (result is { IsSuccess: true, Value: not null })
                 {
-                    var result = Seat.Create(domainEvent.EventId, true, sectorNumber, rowNumber, seatNumber);
+                    seats.Add(result.Value);
+                }
+            }
+        }
+
+        for (var sectorNumber = 1; sectorNumber <= domainEvent.SeatsMap.SectorCount; sectorNumber++)
+        {
+            for (var rowNumber = 1; rowNumber <= domainEvent.SeatsMap.RowsCount; rowNumber++)
+            {
+                for (var seatNumber = 1; seatNumber <= domainEvent.SeatsMap.SeatsInRowCount; seatNumber++)
+                {
+                    var result = Seat.Create(domainEvent.EventId, false, sectorNumber, rowNumber, seatNumber);
                     if (result is { IsSuccess: true, Value: not null })
+                    {
                         seats.Add(result.Value);
+                    }
                 }
             }
         }

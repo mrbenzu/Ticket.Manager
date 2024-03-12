@@ -11,7 +11,9 @@ public class Place : IAggregateRoot
     
     public Address Address { get; private set; }
 
-    public SeatMap SeatMap { get; private set; }
+    public UnnumberedSeatsMap UnnumberedSeatsMap { get; private set; }
+    
+    public SeatsMap SeatsMap { get; private set; }
 
     // EF
     private Place()
@@ -19,24 +21,26 @@ public class Place : IAggregateRoot
         
     }
 
-    private Place(Guid id, string name, Address address, SeatMap seatMap)
+    private Place(Guid id, string name, Address address, UnnumberedSeatsMap unnumberedSeatsMap, SeatsMap seatsMap)
     {
         Id = id;
         Name = name;
         Address = address;
-        SeatMap = seatMap;
+        UnnumberedSeatsMap = unnumberedSeatsMap;
+        SeatsMap = seatsMap;
     }
 
     public static Result<Place> Create(string name, 
         string street, string number, string city, 
-        int noNumericPlaceCount, int sectorCount, int rowsCount, int seatsInRowCount)
+        int unnumberedSeatsSectorCount, int unnumberedSeatsInSectorCount,
+        int sectorCount, int rowsCount, int seatsInRowCount)
     {
         var id = Guid.NewGuid();
-        
         var address = new Address(street, number, city);
-        var seatsMap = SeatMap.Create(noNumericPlaceCount, sectorCount, rowsCount, seatsInRowCount);
+        var unnumberedSeatsMap = UnnumberedSeatsMap.Create(unnumberedSeatsSectorCount, unnumberedSeatsInSectorCount);
+        var seatsMap = SeatsMap.Create(sectorCount, rowsCount, seatsInRowCount);
         
-        var place = new Place(id, name, address, seatsMap);
+        var place = new Place(id, name, address, unnumberedSeatsMap, seatsMap);
 
         return Result.Success(place);
     }

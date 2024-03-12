@@ -2,4 +2,4 @@
 
 namespace Ticket.Manager.Domain.Events.Events;
 
-public record EventCreatedDomainEvent(Guid EventId, SeatMap SeatMap) : DomainEvent;
+public record EventCreatedDomainEvent(Guid EventId, UnnumberedSeatsMap UnnumberedSeatsMap, SeatsMap SeatsMap) : DomainEvent;

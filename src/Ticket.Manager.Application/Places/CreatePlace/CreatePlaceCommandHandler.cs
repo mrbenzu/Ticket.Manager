@@ -10,7 +10,8 @@ public class CreatePlaceCommandHandler(IPlaceRepository placeRepository) : IComm
     {
         var result = Place.Create(command.Name, 
             command.Street, command.Number, command.City, 
-            command.NoNumericPlaceCount, command.SectorCount, command.RowsCount, command.SeatsInRowCount);
+            command.UnnumberedSeatsSectorCount, command.UnnumberedSeatsInSectorCount,
+            command.SectorCount, command.RowsCount, command.SeatsInRowCount);
         if (result is not { IsSuccess: true, Value: not null }) 
             return Result.Failure(result.Error);
 
