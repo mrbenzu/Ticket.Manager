@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Ticket.Manager.Application.Events.Cancel;
+using Ticket.Manager.Application.Events.ChangeName;
 using Ticket.Manager.Application.Events.Create;
 using Ticket.Manager.Application.Events.Reopen;
 using Ticket.Manager.Application.Events.Suspend;
@@ -45,6 +46,15 @@ public static class EventModule
                 return Result(result);
             })
             .WithName("Reopen")
+            .WithOpenApi();
+        
+        app.MapPost("/changeName", async (ISender sender, ChangeNameCommand command) =>
+            {
+                var result = await sender.Send(command);
+
+                return Result(result);
+            })
+            .WithName("ChangeName")
             .WithOpenApi();
     }
 
