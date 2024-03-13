@@ -211,6 +211,7 @@ public class Seat : Entity, IAggregateRoot
         }
         
         IsSuspended = false;
+        AddDomainEvent(new SeatReopenedEvent(Id));
         
         return Result.Success();
     }
