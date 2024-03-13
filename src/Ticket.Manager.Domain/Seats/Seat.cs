@@ -120,6 +120,8 @@ public class Seat : Entity, IAggregateRoot
         IsReserved = false;
         OwnerId = Guid.Empty;
         
+        AddDomainEvent(new ReservationCanceledEvent(Id));
+        
         return Result.Success();
     }
     
