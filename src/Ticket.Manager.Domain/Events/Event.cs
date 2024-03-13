@@ -61,7 +61,7 @@ public class Event : Entity, IAggregateRoot
         var unnumberedSeatsMap = new UnnumberedSeatsMap(unnumberedSeatsSectorCount, unnumberedSeatsInSectorCount);
         var seatsMap = new SeatsMap(sectorCount, rowsCount, seatsInRowCount);
         var @event = new Event(id, name, startDate, startOfSalesDate, placeId, unnumberedSeatsMap, seatsMap);
-        @event.AddDomainEvent(new EventCreatedDomainEvent(@event.Id, @event.UnnumberedSeatsMap, @event.SeatsMap));
+        @event.AddDomainEvent(new EventCreatedEvent(@event.Id, @event.UnnumberedSeatsMap, @event.SeatsMap));
 
         return Result.Success(@event);
     }
