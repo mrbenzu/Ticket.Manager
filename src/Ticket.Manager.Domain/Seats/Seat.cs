@@ -1,9 +1,10 @@
 ﻿using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Common.Domain;
+using Ticket.Manager.Domain.Seats.Events;
 
 namespace Ticket.Manager.Domain.Seats;
 
-public class Seat : IAggregateRoot
+public class Seat : Entity, IAggregateRoot
 {
     private const int DefaultReservationTimeInMinutes = 15;
     private const int DefaultExtendedReservationTimeInMinutes = 10080;
@@ -132,7 +133,7 @@ public class Seat : IAggregateRoot
             return Result.Failure(SeatErrors.IsNotReservedByOwner);
         }
         
-        if (IsReserved && ReservedTo < SystemClock.Now)
+        if (IsReservationValid())
         {
             return Result.Failure(SeatErrors.ReservationExpired);
         }
@@ -152,7 +153,7 @@ public class Seat : IAggregateRoot
         
         return Result.Success();
     }
-
+    
     public Result Return()
     {
         if (!IsSold)
@@ -183,6 +184,13 @@ public class Seat : IAggregateRoot
         {
             return Result.Failure(SeatErrors.IsWithdrawn);
         }
+
+        if (IsReservationValid())
+        {
+            IsReserved = false;
+            ReservedTo = DateTime.MinValue;
+            AddDomainEvent(new ReservationCanceled(Id));
+        }
         
         IsSuspended = true;
         
@@ -204,5 +212,10 @@ public class Seat : IAggregateRoot
         IsSuspended = false;
         
         return Result.Success();
+    }
+    
+    private bool IsReservationValid()
+    {
+        return IsReserved && ReservedTo < SystemClock.Now;
     }
 }
