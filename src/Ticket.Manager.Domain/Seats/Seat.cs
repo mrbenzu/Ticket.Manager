@@ -189,7 +189,7 @@ public class Seat : Entity, IAggregateRoot
         {
             IsReserved = false;
             ReservedTo = DateTime.MinValue;
-            AddDomainEvent(new ReservationCanceled(Id));
+            AddDomainEvent(new ReservationCanceledEvent(Id));
         }
         
         IsSuspended = true;

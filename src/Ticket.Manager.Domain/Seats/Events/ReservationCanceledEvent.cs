@@ -2,4 +2,4 @@
 
 namespace Ticket.Manager.Domain.Seats.Events;
 
-public record ReservationCanceled(Guid SeatId) : DomainEvent;
+public record ReservationCanceledEvent(Guid SeatId) : DomainEvent;
