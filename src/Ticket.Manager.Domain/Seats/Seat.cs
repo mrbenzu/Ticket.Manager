@@ -93,6 +93,8 @@ public class Seat : Entity, IAggregateRoot
         ReservedTo = SystemClock.Now.AddMinutes(DefaultReservationTimeInMinutes);
         OwnerId = ownerId;
         
+        AddDomainEvent(new SeatReservedEvent(Id));
+        
         return Result.Success();
     }
 
