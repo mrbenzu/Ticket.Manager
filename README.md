@@ -1,3 +1,5 @@
+![Alt text](https://cdn.pixabay.com/photo/2017/06/16/07/26/sign-2408065_1280.png)
+
 # Ticket Manager
 
 Microservices-based .NET Application with Clean Architecture, CQRS, DDD, and Event Storming
