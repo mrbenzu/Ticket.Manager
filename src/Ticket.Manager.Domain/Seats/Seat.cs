@@ -171,7 +171,9 @@ public class Seat : Entity, IAggregateRoot
     public Result Withdrawn()
     {
         IsWithdrawn = true;
+        IsSuspended = false;
         IsReserved = false;
+        ReservedTo = DateTime.MinValue;
         IsSold = false;
         OwnerId = Guid.Empty;
         
