@@ -13,7 +13,7 @@ public class Seat : Entity, IAggregateRoot
     
     public Guid EventId { get; private set; }
     
-    public Guid OwnerId { get; private set; }
+    public Guid UserId { get; private set; }
     
     public SeatDetails SeatDetails { get; private set; }
     
@@ -36,7 +36,7 @@ public class Seat : Entity, IAggregateRoot
     {
         Id = id;
         EventId = eventId;
-        OwnerId = Guid.Empty;
+        UserId = Guid.Empty;
         SeatDetails = seatDetails;
         IsReserved = false;
         ReservedTo = DateTime.MinValue;
@@ -55,11 +55,11 @@ public class Seat : Entity, IAggregateRoot
         return Result.Success(seat);
     }
 
-    public Result Reserve(Guid ownerId, List<int> reservedSeatNumbersInRow)
+    public Result Reserve(Guid userId, List<int> reservedSeatNumbersInRow)
     {
-        if (OwnerId == ownerId)
+        if (UserId == userId)
         {
-            return Result.Failure(SeatErrors.IsAlreadyReservedByOwner);
+            return Result.Failure(SeatErrors.IsAlreadyReservedByUser);
         }
         
         if (IsReservationValid())
@@ -89,7 +89,7 @@ public class Seat : Entity, IAggregateRoot
         
         IsReserved = true;
         ReservedTo = SystemClock.Now.AddMinutes(DefaultReservationTimeInMinutes);
-        OwnerId = ownerId;
+        UserId = userId;
         
         AddDomainEvent(new SeatReservedEvent(Id));
         
@@ -103,16 +103,16 @@ public class Seat : Entity, IAggregateRoot
                 reservedSeatNumbersInRow.Any(x => x == SeatDetails.SeatNumber - 2));
     }
 
-    public Result ExtendReservationTime(Guid ownerId)
+    public Result ExtendReservationTime(Guid userId)
     {
         if (IsSold)
         {
             return Result.Failure(SeatErrors.IsAlreadySold);
         }
         
-        if (OwnerId != ownerId)
+        if (UserId != userId)
         {
-            return Result.Failure(SeatErrors.IsNotReservedByOwner);
+            return Result.Failure(SeatErrors.IsNotReservedByUser);
         }
         
         ReservedTo = SystemClock.Now.AddMinutes(DefaultReservationTimeInMinutes);
@@ -120,26 +120,31 @@ public class Seat : Entity, IAggregateRoot
         return Result.Success();
     }
 
-    public Result CancelReservation()
+    public Result CancelReservation(Guid userId)
     {
+        if (UserId != userId)
+        {
+            return Result.Failure(SeatErrors.IsNotReservedByUser);
+        }
+        
         IsReserved = false;
-        OwnerId = Guid.Empty;
+        UserId = Guid.Empty;
         
         AddDomainEvent(new ReservationCanceledEvent(Id));
         
         return Result.Success();
     }
     
-    public Result Sell(Guid ownerId)
+    public Result Sell(Guid userId)
     {
         if (IsSold)
         {
             return Result.Failure(SeatErrors.IsAlreadySold);
         }
         
-        if (OwnerId == ownerId)
+        if (UserId == userId)
         {
-            return Result.Failure(SeatErrors.IsNotReservedByOwner);
+            return Result.Failure(SeatErrors.IsNotReservedByUser);
         }
         
         if (IsReservationValid())
@@ -158,7 +163,7 @@ public class Seat : Entity, IAggregateRoot
         }
         
         IsSold = true;
-        OwnerId = ownerId;
+        UserId = userId;
         
         return Result.Success();
     }
@@ -172,7 +177,7 @@ public class Seat : Entity, IAggregateRoot
     
         IsReserved = false;
         IsSold = false;
-        OwnerId = Guid.Empty;
+        UserId = Guid.Empty;
             
         return Result.Success();
     }
@@ -184,7 +189,7 @@ public class Seat : Entity, IAggregateRoot
         IsReserved = false;
         ReservedTo = DateTime.MinValue;
         IsSold = false;
-        OwnerId = Guid.Empty;
+        UserId = Guid.Empty;
         
         return Result.Success();
     }

@@ -15,7 +15,7 @@ public class CancelReservationCommandHandler(ISeatRepository seatRepository) : I
             return Result.Failure(SeatApplicationErrors.SeatDoesntExist);
         }
 
-        seat.CancelReservation();
+        seat.CancelReservation(command.UserId);
 
         return Result.Success();
     }
