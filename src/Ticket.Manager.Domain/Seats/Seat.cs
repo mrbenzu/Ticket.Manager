@@ -59,17 +59,15 @@ public class Seat : Entity, IAggregateRoot
     {
         if (OwnerId == ownerId)
         {
-            return Result.Failure(SeatErrors.IsReserved);
+            return Result.Failure(SeatErrors.IsAlreadyReservedByOwner);
         }
         
-        if (IsReserved && ReservedTo > SystemClock.Now)
+        if (IsReservationValid())
         {
             return Result.Failure(SeatErrors.IsReserved);
         }
         
-        if (!SeatDetails.IsUnnumberedSeat &&
-            (reservedSeatNumbersInRow.Any(x => x == SeatDetails.SeatNumber + 2)  ||
-            reservedSeatNumbersInRow.Any(x => x == SeatDetails.SeatNumber - 2)))
+        if (IsNotEmptySpaceBetweenNearSeats(reservedSeatNumbersInRow))
         {
             return Result.Failure(SeatErrors.CannotLeaveEmptySeatNearReserved);
         }
@@ -96,6 +94,13 @@ public class Seat : Entity, IAggregateRoot
         AddDomainEvent(new SeatReservedEvent(Id));
         
         return Result.Success();
+    }
+
+    private bool IsNotEmptySpaceBetweenNearSeats(IReadOnlyCollection<int> reservedSeatNumbersInRow)
+    {
+        return !SeatDetails.IsUnnumberedSeat &&
+               (reservedSeatNumbersInRow.Any(x => x == SeatDetails.SeatNumber + 2)  ||
+                reservedSeatNumbersInRow.Any(x => x == SeatDetails.SeatNumber - 2));
     }
 
     public Result ExtendReservationTime(Guid ownerId)
@@ -224,6 +229,6 @@ public class Seat : Entity, IAggregateRoot
     
     private bool IsReservationValid()
     {
-        return IsReserved && ReservedTo < SystemClock.Now;
+        return IsReserved && ReservedTo > SystemClock.Now;
     }
 }
