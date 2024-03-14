@@ -174,6 +174,16 @@ public class Seat : Entity, IAggregateRoot
         {
             return Result.Failure(SeatErrors.IsNotSold);
         }
+        
+        if (IsSuspended)
+        {
+            return Result.Failure(SeatErrors.IsSuspended);
+        }
+        
+        if (IsWithdrawn)
+        {
+            return Result.Failure(SeatErrors.IsWithdrawn);
+        }
     
         IsReserved = false;
         IsSold = false;
