@@ -74,7 +74,7 @@ public class Seat : Entity, IAggregateRoot
         
         if (IsSold)
         {
-            return Result.Failure(SeatErrors.IsSold);
+            return Result.Failure(SeatErrors.IsAlreadySold);
         }
         
         if (IsWithdrawn)
@@ -107,7 +107,7 @@ public class Seat : Entity, IAggregateRoot
     {
         if (IsSold)
         {
-            return Result.Failure(SeatErrors.IsSold);
+            return Result.Failure(SeatErrors.IsAlreadySold);
         }
         
         if (OwnerId != ownerId)
@@ -134,7 +134,7 @@ public class Seat : Entity, IAggregateRoot
     {
         if (IsSold)
         {
-            return Result.Failure(SeatErrors.IsSold);
+            return Result.Failure(SeatErrors.IsAlreadySold);
         }
         
         if (OwnerId == ownerId)
