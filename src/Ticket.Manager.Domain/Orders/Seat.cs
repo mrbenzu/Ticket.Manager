@@ -24,4 +24,11 @@ public class Seat : Entity
 
         return Result.Success(seat);
     }
+
+    public Result Return()
+    {
+        IsReturned = true;
+
+        return Result.Success();
+    }
 }

@@ -36,4 +36,18 @@ public class Order : Entity, IAggregateRoot
 
         return Result.Success(order);
     }
+
+    public Result Return(Guid userId)
+    {
+        if (UserId != userId)
+        {
+            return Result.Failure(OrderErrors.IsNotUserOrder);
+        }
+        
+        _seats.ForEach(x => x.Return());
+        
+        AddDomainEvent(new OrderReturnedEvent(Id, _seats.Select(x => x.SeatId)));
+
+        return Result.Success();
+    }
 }
