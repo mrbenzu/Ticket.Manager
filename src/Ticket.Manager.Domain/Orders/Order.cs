@@ -50,4 +50,18 @@ public class Order : Entity, IAggregateRoot
 
         return Result.Success();
     }
+
+    public Result Approve(Guid userId)
+    {
+        if (UserId != userId)
+        {
+            return Result.Failure(OrderErrors.IsNotUserOrder);
+        }
+
+        IsPaid = true;
+        
+        AddDomainEvent(new OrderApprovedEvent(Id, _seats.Select(x => x.SeatId)));
+
+        return Result.Success();
+    }
 }
