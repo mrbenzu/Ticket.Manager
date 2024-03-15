@@ -64,4 +64,18 @@ public class Order : Entity, IAggregateRoot
 
         return Result.Success();
     }
+    
+    public Result Cancel(Guid userId)
+    {
+        if (UserId != userId)
+        {
+            return Result.Failure(OrderErrors.IsNotUserOrder);
+        }
+
+        IsPaid = true;
+        
+        AddDomainEvent(new OrderCanceledEvent(Id, _seats.Select(x => x.SeatId)));
+
+        return Result.Success();
+    }
 }
