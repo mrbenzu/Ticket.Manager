@@ -3,4 +3,6 @@
 public interface IOrderRepository
 {
     Task<Seat?> Get(Guid id, CancellationToken cancellationToken);
+    
+    Task Add(Order order, CancellationToken cancellationToken);
 }
