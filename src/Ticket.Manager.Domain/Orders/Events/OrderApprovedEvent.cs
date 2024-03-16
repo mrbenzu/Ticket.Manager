@@ -2,4 +2,4 @@
 
 namespace Ticket.Manager.Domain.Orders.Events;
 
-public record OrderApprovedEvent(Guid OrderId, IEnumerable<Guid> SeatIds) : DomainEvent;
+public record OrderApprovedEvent(Guid OrderId, Guid UserId, IEnumerable<Guid> SeatIds) : DomainEvent;

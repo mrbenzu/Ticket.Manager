@@ -60,7 +60,7 @@ public class Order : Entity, IAggregateRoot
 
         IsPaid = true;
         
-        AddDomainEvent(new OrderApprovedEvent(Id, _seats.Select(x => x.SeatId)));
+        AddDomainEvent(new OrderApprovedEvent(Id, UserId, _seats.Select(x => x.SeatId)));
 
         return Result.Success();
     }
