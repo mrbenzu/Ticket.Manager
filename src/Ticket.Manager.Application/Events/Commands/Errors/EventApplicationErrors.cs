@@ -1,6 +1,6 @@
 ﻿using Ticket.Manager.Domain.Common;
 
-namespace Ticket.Manager.Application.Events.Errors;
+namespace Ticket.Manager.Application.Events.Commands.Errors;
 
 public static class EventApplicationErrors
 {

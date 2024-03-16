@@ -1,9 +1,9 @@
 ﻿using Ticket.Manager.Application.Common;
-using Ticket.Manager.Application.Events.Errors;
+using Ticket.Manager.Application.Events.Commands.Errors;
 using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Events;
 
-namespace Ticket.Manager.Application.Events.Suspend;
+namespace Ticket.Manager.Application.Events.Commands.Suspend;
 
 public class SuspendEventCommandHandler(IEventRepository eventRepository) : ICommandHandler<SuspendEventCommand, Result>
 {

@@ -1,13 +1,13 @@
 ﻿using Ticket.Manager.Application.Common;
-using Ticket.Manager.Application.Events.Errors;
+using Ticket.Manager.Application.Events.Commands.Errors;
 using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Events;
 
-namespace Ticket.Manager.Application.Events.Cancel;
+namespace Ticket.Manager.Application.Events.Commands.Reopen;
 
-public class CancelEventCommandHandler(IEventRepository eventRepository) : ICommandHandler<CancelEventCommand, Result>
+public class ReopenEventCommandHandler(IEventRepository eventRepository) : ICommandHandler<ReopenEventCommand, Result>
 {
-    public async Task<Result> Handle(CancelEventCommand command, CancellationToken cancellationToken)
+    public async Task<Result> Handle(ReopenEventCommand command, CancellationToken cancellationToken)
     {
         var @event = await eventRepository.Get(command.EventId, cancellationToken);
         if (@event is null)
@@ -15,7 +15,7 @@ public class CancelEventCommandHandler(IEventRepository eventRepository) : IComm
             return Result.Failure(EventApplicationErrors.EventDoesntExist);
         }
 
-        var result = @event.Cancel();
+        var result = @event.Reopen();
 
         return result.IsFailure 
             ? Result.Failure(result.Error) 

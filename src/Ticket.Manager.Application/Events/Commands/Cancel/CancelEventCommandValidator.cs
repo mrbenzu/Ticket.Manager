@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Ticket.Manager.Application.Events.Cancel;
+namespace Ticket.Manager.Application.Events.Commands.Cancel;
 
 public class CancelEventCommandValidator : AbstractValidator<CancelEventCommand>
 {

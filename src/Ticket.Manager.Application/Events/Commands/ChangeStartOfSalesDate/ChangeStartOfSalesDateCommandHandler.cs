@@ -1,10 +1,9 @@
 ﻿using Ticket.Manager.Application.Common;
-using Ticket.Manager.Application.Events.ChangeStartDate;
-using Ticket.Manager.Application.Events.Errors;
+using Ticket.Manager.Application.Events.Commands.Errors;
 using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Events;
 
-namespace Ticket.Manager.Application.Events.ChangeStartOfSalesDate;
+namespace Ticket.Manager.Application.Events.Commands.ChangeStartOfSalesDate;
 
 public class ChangeStartOfSalesDateCommandHandler(IEventRepository eventRepository) : ICommandHandler<ChangeStartOfSalesDateCommand, Result>
 {

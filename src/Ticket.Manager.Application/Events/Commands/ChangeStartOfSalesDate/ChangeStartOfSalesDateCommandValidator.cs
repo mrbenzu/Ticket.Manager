@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Ticket.Manager.Domain.Common;
 
-namespace Ticket.Manager.Application.Events.ChangeStartOfSalesDate;
+namespace Ticket.Manager.Application.Events.Commands.ChangeStartOfSalesDate;
 
 public class ChangeStartOfSalesDateCommandValidator : AbstractValidator<ChangeStartOfSalesDateCommand>
 {

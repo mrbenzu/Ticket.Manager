@@ -1,10 +1,10 @@
 ﻿using Ticket.Manager.Application.Common;
-using Ticket.Manager.Application.Events.Errors;
+using Ticket.Manager.Application.Events.Commands.Errors;
 using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Events;
 using Ticket.Manager.Domain.Places;
 
-namespace Ticket.Manager.Application.Events.Create;
+namespace Ticket.Manager.Application.Events.Commands.Create;
 
 public class CreateEventCommandHandler(IEventRepository eventRepository, IPlaceRepository placeRepository) : ICommandHandler<CreateEventCommand, Result>
 {

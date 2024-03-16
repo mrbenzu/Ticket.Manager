@@ -1,11 +1,11 @@
 ﻿using MediatR;
-using Ticket.Manager.Application.Events.Cancel;
-using Ticket.Manager.Application.Events.ChangeName;
-using Ticket.Manager.Application.Events.ChangeStartDate;
-using Ticket.Manager.Application.Events.ChangeStartOfSalesDate;
-using Ticket.Manager.Application.Events.Create;
-using Ticket.Manager.Application.Events.Reopen;
-using Ticket.Manager.Application.Events.Suspend;
+using Ticket.Manager.Application.Events.Commands.Cancel;
+using Ticket.Manager.Application.Events.Commands.ChangeName;
+using Ticket.Manager.Application.Events.Commands.ChangeStartDate;
+using Ticket.Manager.Application.Events.Commands.ChangeStartOfSalesDate;
+using Ticket.Manager.Application.Events.Commands.Create;
+using Ticket.Manager.Application.Events.Commands.Reopen;
+using Ticket.Manager.Application.Events.Commands.Suspend;
 using Ticket.Manager.Domain.Common;
 
 namespace Ticket.Manager.API.Events;

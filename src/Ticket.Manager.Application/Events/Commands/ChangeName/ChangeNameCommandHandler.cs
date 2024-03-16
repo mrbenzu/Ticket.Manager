@@ -1,9 +1,9 @@
 ﻿using Ticket.Manager.Application.Common;
-using Ticket.Manager.Application.Events.Errors;
+using Ticket.Manager.Application.Events.Commands.Errors;
 using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Events;
 
-namespace Ticket.Manager.Application.Events.ChangeName;
+namespace Ticket.Manager.Application.Events.Commands.ChangeName;
 
 public class ChangeNameCommandHandler(IEventRepository eventRepository) : ICommandHandler<ChangeNameCommand, Result>
 {

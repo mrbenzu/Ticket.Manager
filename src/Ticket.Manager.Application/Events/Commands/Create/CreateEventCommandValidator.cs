@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using Ticket.Manager.Domain.Common;
 
-namespace Ticket.Manager.Application.Events.Create;
+namespace Ticket.Manager.Application.Events.Commands.Create;
 
 public class CreateEventCommandValidator : AbstractValidator<CreateEventCommand>
 {

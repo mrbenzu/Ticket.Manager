@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Ticket.Manager.Application.Events.Suspend;
+namespace Ticket.Manager.Application.Events.Commands.Suspend;
 
 public class SuspendEventCommandValidator  : AbstractValidator<SuspendEventCommand>
 {

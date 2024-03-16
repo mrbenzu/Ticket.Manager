@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Ticket.Manager.Application.Events.ChangeName;
+namespace Ticket.Manager.Application.Events.Commands.ChangeName;
 
 public class ChangeNameCommandValidator : AbstractValidator<ChangeNameCommand>
 {
