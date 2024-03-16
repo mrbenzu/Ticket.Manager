@@ -1,10 +1,10 @@
 ﻿using FluentValidation;
 
-namespace Ticket.Manager.Application.Seats.Commands.ExtendReservationTime;
+namespace Ticket.Manager.Application.Seats.Commands.ReturnSeat;
 
-public class ExtendReservationTimeCommandValidator : AbstractValidator<ExtendReservationTimeCommand>
+public class ReturnSeatCommandValidator : AbstractValidator<ReturnSeatCommand>
 {
-    public ExtendReservationTimeCommandValidator()
+    public ReturnSeatCommandValidator()
     {
         RuleFor(x => x.SeatId)
             .NotEmpty()

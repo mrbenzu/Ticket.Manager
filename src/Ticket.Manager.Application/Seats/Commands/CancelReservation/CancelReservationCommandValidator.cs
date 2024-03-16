@@ -9,5 +9,9 @@ public class CancelReservationCommandValidator  : AbstractValidator<CancelReserv
         RuleFor(x => x.SeatId)
             .NotEmpty()
             .WithMessage("SeatId is required.");
+        
+        RuleFor(x => x.UserId)
+            .NotEmpty()
+            .WithMessage("UserId is required.");
     }
 }

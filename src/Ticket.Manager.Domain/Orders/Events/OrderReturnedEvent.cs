@@ -2,4 +2,4 @@
 
 namespace Ticket.Manager.Domain.Orders.Events;
 
-public record OrderReturnedEvent(Guid OrderId, IEnumerable<Guid> SeatIds) : DomainEvent;
+public record OrderReturnedEvent(Guid OrderId, Guid UserId, IEnumerable<Guid> SeatIds) : DomainEvent;

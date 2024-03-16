@@ -46,7 +46,7 @@ public class Order : Entity, IAggregateRoot
         
         _seats.ForEach(x => x.Return());
         
-        AddDomainEvent(new OrderReturnedEvent(Id, _seats.Select(x => x.SeatId)));
+        AddDomainEvent(new OrderReturnedEvent(Id, userId, _seats.Select(x => x.SeatId)));
 
         return Result.Success();
     }
