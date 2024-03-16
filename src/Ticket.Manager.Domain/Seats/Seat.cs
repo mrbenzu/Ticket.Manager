@@ -201,6 +201,8 @@ public class Seat : Entity, IAggregateRoot
         IsSold = false;
         UserId = Guid.Empty;
         
+        AddDomainEvent(new SeatWithdrawnedEvent(Id));
+        
         return Result.Success();
     }
     
