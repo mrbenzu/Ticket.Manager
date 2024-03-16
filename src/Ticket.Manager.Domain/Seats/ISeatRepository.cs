@@ -8,5 +8,8 @@ public interface ISeatRepository
 
     Task<IEnumerable<Seat>> GetEventSeats(Guid eventId, CancellationToken cancellationToken);
     
-    Task<IEnumerable<int>> GetReservedSeatNumbersInRow(Guid eventId, SeatDetails seatDetails, CancellationToken cancellationToken);
+    Task<IEnumerable<int>> GetReservedSeatNumbersInRow(Guid eventId, 
+        int sectorNumber, int rowNumber, int seatNumber, CancellationToken cancellationToken);
+
+    Task<Seat?> GetFirstFreeSeatInRow(Guid eventId, int sectorNumber, int rowNumber, int seatNumber, CancellationToken cancellationToken);
 }

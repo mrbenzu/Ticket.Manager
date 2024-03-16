@@ -55,7 +55,7 @@ public class Seat : Entity, IAggregateRoot
         return Result.Success(seat);
     }
 
-    public Result Reserve(Guid userId, List<int> reservedSeatNumbersInRow)
+    public Result Reserve(Guid userId, List<int> reservedSeatNumbersInRow, bool isLongTimeReservation = false)
     {
         if (UserId == userId)
         {
@@ -88,7 +88,9 @@ public class Seat : Entity, IAggregateRoot
         }
         
         IsReserved = true;
-        ReservedTo = SystemClock.Now.AddMinutes(DefaultReservationTimeInMinutes);
+        ReservedTo = isLongTimeReservation
+            ? SystemClock.Now.AddMinutes(DefaultReservationTimeInMinutes)
+            : SystemClock.Now.AddMinutes(DefaultExtendedReservationTimeInMinutes);
         UserId = userId;
         
         AddDomainEvent(new SeatReservedEvent(Id));
@@ -194,6 +196,9 @@ public class Seat : Entity, IAggregateRoot
 
     public Result Withdrawn()
     {
+        var @event = new SeatWithdrawnEvent(Id, EventId, UserId, IsReserved, 
+            SeatDetails.IsUnnumberedSeat, SeatDetails.Sector, SeatDetails.RowNumber, SeatDetails.SeatNumber);
+        
         IsWithdrawn = true;
         IsSuspended = false;
         IsReserved = false;
@@ -201,7 +206,7 @@ public class Seat : Entity, IAggregateRoot
         IsSold = false;
         UserId = Guid.Empty;
         
-        AddDomainEvent(new SeatWithdrawnedEvent(Id));
+        AddDomainEvent(@event);
         
         return Result.Success();
     }
