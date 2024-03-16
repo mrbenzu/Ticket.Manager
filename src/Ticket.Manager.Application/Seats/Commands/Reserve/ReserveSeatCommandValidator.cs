@@ -2,7 +2,7 @@
 
 namespace Ticket.Manager.Application.Seats.Commands.Reserve;
 
-public class ReserveSeatCommandValidator  : AbstractValidator<ReserveSeatCommand>
+public class ReserveSeatCommandValidator : AbstractValidator<ReserveSeatCommand>
 {
     public ReserveSeatCommandValidator()
     {

@@ -4,7 +4,7 @@ using Ticket.Manager.Domain.Seats;
 
 namespace Ticket.Manager.Application.Seats.Events.EventSuspended;
 
-public class EventSuspendedEventHandler(ISeatRepository seatRepository)  : IDomainEventHandler<EventSuspendedEvent>
+public class EventSuspendedEventHandler(ISeatRepository seatRepository) : IDomainEventHandler<EventSuspendedEvent>
 {
     public async Task Handle(EventSuspendedEvent @event, CancellationToken cancellationToken)
     {

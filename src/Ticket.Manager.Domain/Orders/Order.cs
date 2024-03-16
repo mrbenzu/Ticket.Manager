@@ -32,7 +32,7 @@ public class Order : Entity, IAggregateRoot
         var id = Guid.NewGuid();
         var order = new Order(id, userId, eventId, seats);
 
-        order.AddDomainEvent(new OrderCreatedEvent(id, seats.Select(x => x.SeatId)));
+        order.AddDomainEvent(new OrderCreatedEvent(id, userId, seats.Select(x => x.SeatId)));
 
         return Result.Success(order);
     }
