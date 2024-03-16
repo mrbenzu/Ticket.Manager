@@ -7,7 +7,7 @@ namespace Ticket.Manager.API.Orders;
 
 public static class OrderModule
 {
-    public static void AddPlaceEndpoints(this IEndpointRouteBuilder app)
+    public static void AddOrderEndpoints(this IEndpointRouteBuilder app)
     {
         app.MapPost("/create", async (ISender sender, CreateOrderCommand command) =>
             {
