@@ -2,4 +2,4 @@
 
 namespace Ticket.Manager.Domain.Orders.Events;
 
-public record OrderCanceledEvent(Guid OrderId, IEnumerable<Guid> SeatIds) : DomainEvent;
+public record OrderCanceledEvent(Guid OrderId, Guid UserId, IEnumerable<Guid> SeatIds) : DomainEvent;

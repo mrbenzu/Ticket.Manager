@@ -74,7 +74,7 @@ public class Order : Entity, IAggregateRoot
 
         IsPaid = true;
         
-        AddDomainEvent(new OrderCanceledEvent(Id, _seats.Select(x => x.SeatId)));
+        AddDomainEvent(new OrderCanceledEvent(Id, userId, _seats.Select(x => x.SeatId)));
 
         return Result.Success();
     }
