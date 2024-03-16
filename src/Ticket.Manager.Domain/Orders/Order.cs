@@ -51,13 +51,8 @@ public class Order : Entity, IAggregateRoot
         return Result.Success();
     }
 
-    public Result Approve(Guid userId)
+    public Result Approve()
     {
-        if (UserId != userId)
-        {
-            return Result.Failure(OrderErrors.IsNotUserOrder);
-        }
-
         IsPaid = true;
         
         AddDomainEvent(new OrderApprovedEvent(Id, UserId, _seats.Select(x => x.SeatId)));
@@ -65,16 +60,9 @@ public class Order : Entity, IAggregateRoot
         return Result.Success();
     }
     
-    public Result Cancel(Guid userId)
+    public Result Cancel()
     {
-        if (UserId != userId)
-        {
-            return Result.Failure(OrderErrors.IsNotUserOrder);
-        }
-
-        IsPaid = true;
-        
-        AddDomainEvent(new OrderCanceledEvent(Id, userId, _seats.Select(x => x.SeatId)));
+        AddDomainEvent(new OrderCanceledEvent(Id, UserId, _seats.Select(x => x.SeatId)));
 
         return Result.Success();
     }
