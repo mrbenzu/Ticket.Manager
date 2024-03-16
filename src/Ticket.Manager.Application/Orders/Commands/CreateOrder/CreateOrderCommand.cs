@@ -1,7 +1,7 @@
 ﻿using Ticket.Manager.Application.Common;
 using Ticket.Manager.Domain.Common;
 
-namespace Ticket.Manager.Application.Orders.Commands;
+namespace Ticket.Manager.Application.Orders.Commands.CreateOrder;
 
 public record CreateOrderCommand(Guid EventId, Guid UserId, IReadOnlyCollection<Seat> Seats) : ICommand<Result>;
 

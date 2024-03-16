@@ -2,7 +2,7 @@
 using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Orders;
 
-namespace Ticket.Manager.Application.Orders.Commands;
+namespace Ticket.Manager.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderCommandHandler(IOrderRepository orderRepository) : ICommandHandler<CreateOrderCommand, Result>
 {

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Ticket.Manager.Application.Orders.Commands;
+namespace Ticket.Manager.Application.Orders.Commands.CreateOrder;
 
 public class CreateOrderCommandValidator  : AbstractValidator<CreateOrderCommand>
 {
