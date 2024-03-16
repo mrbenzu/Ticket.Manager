@@ -15,7 +15,8 @@ public class ReserveSeatCommandHandler(ISeatRepository seatRepository) : IComman
             return Result.Failure(SeatApplicationErrors.SeatDoesntExist);
         }
         
-        var reservedSeatNumbersInRow = await seatRepository.GetReservedSeatNumbersInRow(seat.EventId, seat.SeatDetails, cancellationToken);
+        var reservedSeatNumbersInRow = await seatRepository.GetReservedSeatNumbersInRow(seat.EventId, 
+            seat.SeatDetails.Sector, seat.SeatDetails.RowNumber, seat.SeatDetails.SeatNumber, cancellationToken);
         var result = seat.Reserve(command.UserId, reservedSeatNumbersInRow.ToList());
         
         return result;
