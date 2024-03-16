@@ -17,7 +17,7 @@ public class CreateEventCommandValidator : AbstractValidator<CreateEventCommand>
         
         RuleFor(x => x.StartDate)
             .NotEmpty()
-            .WithMessage("Start date is required..");
+            .WithMessage("Start date is required.");
         
         RuleFor(x => x.StartDate)
             .GreaterThan(SystemClock.Now)
