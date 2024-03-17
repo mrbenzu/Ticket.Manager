@@ -45,11 +45,9 @@ namespace Ticket.Manager.Domain.UnitTests.Events
         [Fact]
         public void Event_Create_InvalidName_Failed()
         {
-            var action = () =>  Event.Create(null, _startDate, _startOfSalesDate, _placeId,
+            AssertBrokenRule<EventNameCannotBeNullOrWhiteSpaceRule>(() => Event.Create(string.Empty, _startDate, _startOfSalesDate, _placeId,
                 UnnumberedSeatsSectorCount, UnnumberedSeatsInSectorCount,
-                SectorCount, RowsCount, SeatsInRowCount);
-
-            AssertBrokenRule<EventNameCannotBeNullOrWhiteSpaceRule>(action);
+                SectorCount, RowsCount, SeatsInRowCount));
         }
         
         [Fact]
@@ -57,12 +55,10 @@ namespace Ticket.Manager.Domain.UnitTests.Events
         {
             var startOfSalesDate = new DateTime(2024, 03, 17);
             var startDate = startOfSalesDate.AddDays(1);
-        
-            var action = () => Event.Create(EventName, startDate, startOfSalesDate, _placeId,
-                UnnumberedSeatsSectorCount, UnnumberedSeatsInSectorCount,
-                SectorCount, RowsCount, SeatsInRowCount);
             
-            AssertBrokenRule<EventStartOfSalesDateCannotBeEarlierThanStartDateRule>(action);
+            AssertBrokenRule<EventStartOfSalesDateCannotBeEarlierThanStartDateRule>(() => Event.Create(EventName, startDate, startOfSalesDate, _placeId,
+                UnnumberedSeatsSectorCount, UnnumberedSeatsInSectorCount,
+                SectorCount, RowsCount, SeatsInRowCount));
         }
 
         [Fact]
