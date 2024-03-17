@@ -86,7 +86,7 @@ public class Event : Entity, IAggregateRoot
             return Result.Failure(EventErrors.IsCanceled);
         }
         
-        IsSuspended = true;
+        IsSuspended = false;
         AddDomainEvent(new EventReopenedEvent(Id));
         
         return Result.Success();
