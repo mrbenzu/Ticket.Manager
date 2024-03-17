@@ -6,5 +6,5 @@ public class EventNameCannotBeNullOrWhiteSpaceRule(string name) : IBusinessRule
 {
     public bool IsBroken() => string.IsNullOrEmpty(name);
 
-    public string Message => "Event is cancelled.";
+    public string Message => "Event name cannot be empty.";
 }

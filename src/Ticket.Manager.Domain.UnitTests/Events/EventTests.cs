@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Ticket.Manager.Domain.Common.Domain;
 using Ticket.Manager.Domain.Events;
+using Ticket.Manager.Domain.Events.BusinessRules;
 using Ticket.Manager.Domain.Events.Events;
 using Xunit;
 
@@ -36,118 +37,101 @@ namespace Ticket.Manager.Domain.UnitTests.Events
 
             var eventCreatedEvent = GetDomainEvent<EventCreatedEvent>( @event);
             eventCreatedEvent.Should().NotBeNull();
-            eventCreatedEvent.EventId.Should().Be(@event.Id);
-            eventCreatedEvent.UnnumberedSeatsMap.Should().BeEquivalentTo( @event.UnnumberedSeatsMap);
-            eventCreatedEvent.SeatsMap.Should().BeEquivalentTo( @event.SeatsMap);
+            eventCreatedEvent?.EventId.Should().Be(@event.Id);
+            eventCreatedEvent?.UnnumberedSeatsMap.Should().BeEquivalentTo( @event.UnnumberedSeatsMap);
+            eventCreatedEvent?.SeatsMap.Should().BeEquivalentTo( @event.SeatsMap);
         }
         
-        // [Fact]
-        // public void Event_Create_InvalidName_Failed()
-        // {
-        //     var result = Event.Create(null, _startDate, _startOfSalesDate, _placeId,
-        //         UnnumberedSeatsSectorCount, UnnumberedSeatsInSectorCount,
-        //         SectorCount, RowsCount, SeatsInRowCount);
-        //     
-        //     result.IsSuccess.Should().BeFalse();
-        //     result.Error.Should().Be(EventErrors.InvalidName);
-        // }
+        [Fact]
+        public void Event_Create_InvalidName_Failed()
+        {
+            var action = () =>  Event.Create(null, _startDate, _startOfSalesDate, _placeId,
+                UnnumberedSeatsSectorCount, UnnumberedSeatsInSectorCount,
+                SectorCount, RowsCount, SeatsInRowCount);
+
+            AssertBrokenRule<EventNameCannotBeNullOrWhiteSpaceRule>(action);
+        }
         
-        // [Fact]
-        // public void Event_Create_StartOfSalesDateIsEarlierThanStartDate_Failed()
-        // {
-        //     var startOfSalesDate = new DateTime(2024, 03, 17);
-        //     var startDate = startOfSalesDate.AddDays(1);
-        //
-        //     var result = Event.Create(EventName, startDate, startOfSalesDate, _placeId,
-        //         UnnumberedSeatsSectorCount, UnnumberedSeatsInSectorCount,
-        //         SectorCount, RowsCount, SeatsInRowCount);
-        //     
-        //     result.IsSuccess.Should().BeFalse();
-        //     result.Error.Should().Be(EventErrors.StartOfSalesDateIsEarlierThanStartDate);
-        // }
+        [Fact]
+        public void Event_Create_StartOfSalesDateIsEarlierThanStartDate_Failed()
+        {
+            var startOfSalesDate = new DateTime(2024, 03, 17);
+            var startDate = startOfSalesDate.AddDays(1);
         
-        // [Fact]
-        // public void Event_Suspend_Success()
-        // {
-        //     var result = CreateEvent();
-        //     
-        //      @event.Suspend();
-        //     
-        //      @event.Should().NotBeNull();
-        //     result.IsSuccess.Should().BeTrue();
-        //      @event.IsSuspended.Should().BeTrue();
-        //
-        //     var eventCreatedEvent = GetDomainEvent<EventSuspendedEvent>( @event);
-        //     eventCreatedEvent.Should().NotBeNull();
-        //     eventCreatedEvent.EventId.Should().Be( @event.Id);
-        // }
-        //
-        // [Fact]
-        // public void Event_Suspend_Failed()
-        // {
-        //     var result = CreateEvent();
-        //
-        //      @event.Cancel();
-        //     var res =  @event.Suspend();
-        //     
-        //     res.IsSuccess.Should().BeFalse();
-        //     res.Error.Should().Be(EventErrors.IsCanceled);
-        // }
-        //
-        // [Fact]
-        // public void Event_Reopen_Success()
-        // {
-        //     var result = CreateEvent();
-        //     
-        //      @event.Reopen();
-        //     
-        //      @event.Should().NotBeNull();
-        //     result.IsSuccess.Should().BeTrue();
-        //      @event.IsSuspended.Should().BeFalse();
-        //     
-        //     var eventReopenedEvent = GetDomainEvent<EventReopenedEvent>( @event);
-        //     eventReopenedEvent.Should().NotBeNull();
-        //     eventReopenedEvent.EventId.Should().Be( @event.Id);
-        // }
-        //
-        // [Fact]
-        // public void Event_Reopen_Failed()
-        // {
-        //     var result = CreateEvent();
-        //
-        //      @event.Cancel();
-        //     var res =  @event.Reopen();
-        //     
-        //     res.IsSuccess.Should().BeFalse();
-        //     res.Error.Should().Be(EventErrors.IsCanceled);
-        // }
-        //
-        // [Fact]
-        // public void Event_Cancel_Success()
-        // {
-        //     var result = CreateEvent();
-        //     
-        //      @event.Cancel();
-        //     
-        //      @event.Should().NotBeNull();
-        //     result.IsSuccess.Should().BeTrue();
-        //     
-        //     var eventCanceledEvent = GetDomainEvent<EventCanceledEvent>( @event);
-        //     eventCanceledEvent.Should().NotBeNull();
-        //     eventCanceledEvent.EventId.Should().Be( @event.Id);
-        // }
-        //
-        // [Fact]
-        // public void Event_Cancel_Failed()
-        // {
-        //     var result = CreateEvent();
-        //
-        //      @event.Cancel();
-        //     var res =  @event.Cancel();
-        //     
-        //     res.IsSuccess.Should().BeFalse();
-        //     res.Error.Should().Be(EventErrors.IsCanceled);
-        // }
+            var action = () => Event.Create(EventName, startDate, startOfSalesDate, _placeId,
+                UnnumberedSeatsSectorCount, UnnumberedSeatsInSectorCount,
+                SectorCount, RowsCount, SeatsInRowCount);
+            
+            AssertBrokenRule<EventStartOfSalesDateCannotBeEarlierThanStartDateRule>(action);
+        }
+
+        [Fact]
+        public void Event_Suspend_Success()
+        {
+            var @event = CreateEvent();
+
+            @event.Suspend();
+
+            @event.IsSuspended.Should().BeTrue();
+            var eventCreatedEvent = GetDomainEvent<EventSuspendedEvent>(@event);
+            eventCreatedEvent.Should().NotBeNull();
+            eventCreatedEvent?.EventId.Should().Be(@event.Id);
+        }
+
+        [Fact]
+        public void Event_Suspend_Failed()
+        {
+            var @event = CreateEvent();
+            @event.Cancel();
+            
+            AssertBrokenRule<EventCannotSuspendCanceledEventRule>(() => @event.Suspend());
+        }
+        
+        [Fact]
+        public void Event_Reopen_Success()
+        {
+            var @event = CreateEvent();
+            
+             @event.Reopen();
+            
+             @event.Should().NotBeNull();
+             @event.IsSuspended.Should().BeFalse();
+            var eventReopenedEvent = GetDomainEvent<EventReopenedEvent>( @event);
+            eventReopenedEvent.Should().NotBeNull();
+            eventReopenedEvent?.EventId.Should().Be( @event.Id);
+        }
+        
+        [Fact]
+        public void Event_Reopen_Failed()
+        {
+            var @event = CreateEvent();
+        
+             @event.Cancel();
+            
+            AssertBrokenRule<EventCannotReopenCanceledEventRule>(() => @event.Reopen());
+        }
+
+        [Fact]
+        public void Event_Cancel_Success()
+        {
+            var @event = CreateEvent();
+
+            @event.Cancel();
+
+            var eventCanceledEvent = GetDomainEvent<EventCanceledEvent>(@event);
+            eventCanceledEvent.Should().NotBeNull();
+            eventCanceledEvent?.EventId.Should().Be(@event.Id);
+        }
+
+        [Fact]
+        public void Event_Cancel_Failed()
+        {
+            var @event = CreateEvent();
+        
+            @event.Cancel();
+            
+            AssertBrokenRule<EventCannotCancelCanceledEventRule>(() => @event.Cancel());
+        }
         
         private Event CreateEvent()
         {
@@ -163,6 +147,20 @@ namespace Ticket.Manager.Domain.UnitTests.Events
             var domainEvents = entity.DomainEvents;
             var domainEvent = domainEvents.OfType<T>().FirstOrDefault();
             return domainEvent;
+        }
+        
+        private static void AssertBrokenRule<TRule>(Func<object> action)
+            where TRule : class, IBusinessRule
+        {
+            var exception = Assert.Throws<BusinessRuleValidationException>(action);
+            exception.BrokenRule.Should().BeOfType<TRule>();
+        }
+        
+        private static void AssertBrokenRule<TRule>(Action action)
+            where TRule : class, IBusinessRule
+        {
+            var exception = Assert.Throws<BusinessRuleValidationException>(action);
+            exception.BrokenRule.Should().BeOfType<TRule>();
         }
     }
 }
