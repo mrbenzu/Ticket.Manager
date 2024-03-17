@@ -1,24 +1,14 @@
 ﻿using Ticket.Manager.Application.Common;
-using Ticket.Manager.Application.Events.Commands.Errors;
-using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Events;
 
 namespace Ticket.Manager.Application.Events.Commands.Suspend;
 
-public class SuspendEventCommandHandler(IEventRepository eventRepository) : ICommandHandler<SuspendEventCommand, Result>
+public class SuspendEventCommandHandler(IEventRepository eventRepository) : ICommandHandler<SuspendEventCommand>
 {
-    public async Task<Result> Handle(SuspendEventCommand command, CancellationToken cancellationToken)
+    public async Task Handle(SuspendEventCommand command, CancellationToken cancellationToken)
     {
-        var @event = await eventRepository.Get(command.EventId, cancellationToken);
-        if (@event is null)
-        {
-            return Result.Failure(EventApplicationErrors.EventDoesntExist);
-        }
-
-        var result = @event.Suspend();
-
-        return result.IsFailure 
-            ? Result.Failure(result.Error) 
-            : Result.Success();
+        var @event = await eventRepository.Get(command.EventId, cancellationToken); 
+        
+        @event.Suspend();
     }
 }

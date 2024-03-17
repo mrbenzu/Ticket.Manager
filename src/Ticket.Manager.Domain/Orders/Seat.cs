@@ -1,5 +1,4 @@
-﻿using Ticket.Manager.Domain.Common;
-using Ticket.Manager.Domain.Common.Domain;
+﻿using Ticket.Manager.Domain.Common.Domain;
 
 namespace Ticket.Manager.Domain.Orders;
 
@@ -18,17 +17,15 @@ public class Seat : Entity
         IsReturned = false;
     }
 
-    public static Result<Seat> Create(Guid seatId, decimal price)
+    public static Seat Create(Guid seatId, decimal price)
     {
         var seat = new Seat(seatId, price);
 
-        return Result.Success(seat);
+        return new Seat(seatId, price);
     }
 
-    public Result Return()
+    public void Return()
     {
         IsReturned = true;
-
-        return Result.Success();
     }
 }

@@ -3,4 +3,4 @@ using Ticket.Manager.Domain.Common;
 
 namespace Ticket.Manager.Application.Events.Commands.Suspend;
 
-public record SuspendEventCommand(Guid EventId) : ICommand<Result>;
+public record SuspendEventCommand(Guid EventId) : ICommand;

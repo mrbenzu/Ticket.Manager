@@ -1,5 +1,5 @@
-﻿using Ticket.Manager.Domain.Common;
-using Ticket.Manager.Domain.Common.Domain;
+﻿using Ticket.Manager.Domain.Common.Domain;
+using Ticket.Manager.Domain.Orders.BusinessRules;
 using Ticket.Manager.Domain.Orders.Events;
 
 namespace Ticket.Manager.Domain.Orders;
@@ -17,6 +17,8 @@ public class Order : Entity, IAggregateRoot
     private readonly List<Seat> _seats;
     
     public bool IsPaid { get; private set; }
+    
+    public bool IsCancel { get; private set; }
 
     private Order(Guid id, Guid userId, Guid eventId, List<Seat> seats)
     {
@@ -24,46 +26,39 @@ public class Order : Entity, IAggregateRoot
         UserId = userId;
         EventId = eventId;
         IsPaid = false;
+        IsCancel = false;
         _seats = seats.ToList();
+
+        AddDomainEvent(new OrderCreatedEvent(id, userId, seats.Select(x => x.SeatId)));
     }
 
-    public static Result<Order> Create(Guid userId, Guid eventId, List<Seat> seats)
+    public static Order Create(Guid userId, Guid eventId, List<Seat> seats)
     {
         var id = Guid.NewGuid();
         var order = new Order(id, userId, eventId, seats);
-
-        order.AddDomainEvent(new OrderCreatedEvent(id, userId, seats.Select(x => x.SeatId)));
-
-        return Result.Success(order);
+        return order;
     }
 
-    public Result Return(Guid userId)
+    public void Return(Guid userId)
     {
-        if (UserId != userId)
-        {
-            return Result.Failure(OrderErrors.IsNotUserOrder);
-        }
+        CheckRule(new ItIsNotUserOrderRule(UserId, userId));
         
         _seats.ForEach(x => x.Return());
         
         AddDomainEvent(new OrderReturnedEvent(Id, userId, _seats.Select(x => x.SeatId)));
-
-        return Result.Success();
     }
 
-    public Result Approve()
+    public void Approve()
     {
         IsPaid = true;
         
         AddDomainEvent(new OrderApprovedEvent(Id, UserId, _seats.Select(x => x.SeatId)));
-
-        return Result.Success();
     }
     
-    public Result Cancel()
+    public void Cancel()
     {
+        IsCancel = true;
+        
         AddDomainEvent(new OrderCanceledEvent(Id, UserId, _seats.Select(x => x.SeatId)));
-
-        return Result.Success();
     }
 }

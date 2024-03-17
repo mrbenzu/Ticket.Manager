@@ -6,7 +6,6 @@ using Ticket.Manager.Application.Events.Commands.ChangeStartOfSalesDate;
 using Ticket.Manager.Application.Events.Commands.Create;
 using Ticket.Manager.Application.Events.Commands.Reopen;
 using Ticket.Manager.Application.Events.Commands.Suspend;
-using Ticket.Manager.Domain.Common;
 
 namespace Ticket.Manager.API.Events;
 
@@ -14,70 +13,32 @@ public static class EventModule
 {
     public static void AddEventEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/create", async (ISender sender, CreateEventCommand command) =>
-            {
-                var result = await sender.Send(command);
-
-                return Result(result);
-            })
+        app.MapPost("/create", async (ISender sender, CreateEventCommand command) => await sender.Send(command))
             .WithName("Create")
             .WithOpenApi();
         
-        app.MapPost("/cancel", async (ISender sender, CancelEventCommand command) =>
-            {
-                var result = await sender.Send(command);
-
-                return Result(result);
-            })
+        app.MapPost("/cancel", async (ISender sender, CancelEventCommand command) => await sender.Send(command))
             .WithName("Cancel")
             .WithOpenApi();
         
-        app.MapPost("/suspend", async (ISender sender, SuspendEventCommand command) =>
-            {
-                var result = await sender.Send(command);
-
-                return Result(result);
-            })
+        app.MapPost("/suspend", async (ISender sender, SuspendEventCommand command) => await sender.Send(command))
             .WithName("Suspend")
             .WithOpenApi();
         
-        app.MapPost("/reopen", async (ISender sender, ReopenEventCommand command) =>
-            {
-                var result = await sender.Send(command);
-
-                return Result(result);
-            })
+        app.MapPost("/reopen", async (ISender sender, ReopenEventCommand command) => await sender.Send(command))
             .WithName("Reopen")
             .WithOpenApi();
         
-        app.MapPost("/changeName", async (ISender sender, ChangeNameCommand command) =>
-            {
-                var result = await sender.Send(command);
-
-                return Result(result);
-            })
+        app.MapPost("/changeName", async (ISender sender, ChangeNameCommand command) => await sender.Send(command))
             .WithName("ChangeName")
             .WithOpenApi();
         
-        app.MapPost("/changeStartDate", async (ISender sender, ChangeStartDateCommand command) =>
-            {
-                var result = await sender.Send(command);
-
-                return Result(result);
-            })
+        app.MapPost("/changeStartDate", async (ISender sender, ChangeStartDateCommand command) => await sender.Send(command))
             .WithName("ChangeStartDate")
             .WithOpenApi();
         
-        app.MapPost("/changeStartOfSalesDate", async (ISender sender, ChangeStartOfSalesDateCommand command) =>
-            {
-                var result = await sender.Send(command);
-
-                return Result(result);
-            })
+        app.MapPost("/changeStartOfSalesDate", async (ISender sender, ChangeStartOfSalesDateCommand command) => await sender.Send(command))
             .WithName("ChangeStartOfSalesDate")
             .WithOpenApi();
     }
-
-    private static IResult Result(Result result) =>
-        result.IsSuccess ? Results.Ok() : Results.BadRequest(result.Error.Description);
 }

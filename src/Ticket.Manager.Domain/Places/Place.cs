@@ -1,5 +1,4 @@
-﻿using Ticket.Manager.Domain.Common;
-using Ticket.Manager.Domain.Common.Domain;
+﻿using Ticket.Manager.Domain.Common.Domain;
 
 namespace Ticket.Manager.Domain.Places;
 
@@ -30,7 +29,7 @@ public class Place : IAggregateRoot
         SeatsMap = seatsMap;
     }
 
-    public static Result<Place> Create(string name, 
+    public static Place Create(string name, 
         string street, string number, string city, 
         int unnumberedSeatsSectorCount, int unnumberedSeatsInSectorCount,
         int sectorCount, int rowsCount, int seatsInRowCount)
@@ -42,6 +41,6 @@ public class Place : IAggregateRoot
         
         var place = new Place(id, name, address, unnumberedSeatsMap, seatsMap);
 
-        return Result.Success(place);
+        return place;
     }
 }

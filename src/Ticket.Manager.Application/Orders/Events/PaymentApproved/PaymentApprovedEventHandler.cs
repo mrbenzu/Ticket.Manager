@@ -10,6 +10,6 @@ public class PaymentApprovedEventHandler(IOrderRepository orderRepository) : IDo
     {
         var order = await orderRepository.Get(@event.OrderId, cancellationToken);
         
-        order?.Approve();
+        order.Approve();
     }
 }

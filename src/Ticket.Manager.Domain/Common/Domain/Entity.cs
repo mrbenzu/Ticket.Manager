@@ -15,4 +15,12 @@ public abstract class Entity
     {
         _domainEvents.Clear();
     }
+    
+    protected void CheckRule(IBusinessRule rule)
+    {
+        if (rule.IsBroken())
+        {
+            throw new BusinessRuleValidationException(rule);
+        }
+    }
 }

@@ -4,7 +4,7 @@ public interface ISeatRepository
 {
     Task AddMany(IEnumerable<Seat> seats, CancellationToken cancellationToken);
     
-    Task<Seat?> Get(Guid id, CancellationToken cancellationToken);
+    Task<Seat> Get(Guid id, CancellationToken cancellationToken);
 
     Task<IEnumerable<Seat>> GetEventSeats(Guid eventId, CancellationToken cancellationToken);
     

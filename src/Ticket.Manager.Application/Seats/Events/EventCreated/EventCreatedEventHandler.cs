@@ -21,11 +21,7 @@ public class EventCreatedEventHandler(ISeatRepository seatRepository) : IDomainE
         {
             for (var seatNumber = 1; seatNumber <= @event.UnnumberedSeatsMap.SeatsInSectorCount; seatNumber++)
             {
-                var result = Seat.Create(@event.EventId, true, sectorNumber, 0, seatNumber);
-                if (result is { IsSuccess: true, Value: not null })
-                {
-                    seats.Add(result.Value);
-                }
+                seats.Add(Seat.Create(@event.EventId, true, sectorNumber, 0, seatNumber));
             }
         }
 
@@ -35,11 +31,7 @@ public class EventCreatedEventHandler(ISeatRepository seatRepository) : IDomainE
             {
                 for (var seatNumber = 1; seatNumber <= @event.SeatsMap.SeatsInRowCount; seatNumber++)
                 {
-                    var result = Seat.Create(@event.EventId, false, sectorNumber, rowNumber, seatNumber);
-                    if (result is { IsSuccess: true, Value: not null })
-                    {
-                        seats.Add(result.Value);
-                    }
+                    seats.Add(Seat.Create(@event.EventId, false, sectorNumber, rowNumber, seatNumber));
                 }
             }
         }

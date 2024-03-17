@@ -6,4 +6,4 @@ namespace Ticket.Manager.Application.Places.CreatePlace;
 public record CreatePlaceCommand(string Name, 
     string Street, string Number, string City, 
     int UnnumberedSeatsSectorCount, int UnnumberedSeatsInSectorCount,
-    int SectorCount, int RowsCount, int SeatsInRowCount) : ICommand<Result>;
+    int SectorCount, int RowsCount, int SeatsInRowCount) : ICommand;
