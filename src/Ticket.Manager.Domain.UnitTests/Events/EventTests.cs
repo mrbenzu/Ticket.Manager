@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
-using Ticket.Manager.Domain.Common.Domain;
 using Ticket.Manager.Domain.Events;
 using Ticket.Manager.Domain.Events.BusinessRules;
 using Ticket.Manager.Domain.Events.Events;
+using Ticket.Manager.Domain.UnitTests.Common;
 using Xunit;
 
 namespace Ticket.Manager.Domain.UnitTests.Events
 {
-    public class EventTests
+    public class EventTests : TestBase
     {
         private const string EventName = "Test Event";
         private readonly DateTime _startDate = new(2024, 03, 17);
@@ -136,27 +136,6 @@ namespace Ticket.Manager.Domain.UnitTests.Events
                 SectorCount, RowsCount, SeatsInRowCount);
 
             return result;
-        }
-
-        private static T? GetDomainEvent<T>(Entity entity) where T : DomainEvent
-        {
-            var domainEvents = entity.DomainEvents;
-            var domainEvent = domainEvents.OfType<T>().FirstOrDefault();
-            return domainEvent;
-        }
-        
-        private static void AssertBrokenRule<TRule>(Func<object> action)
-            where TRule : class, IBusinessRule
-        {
-            var exception = Assert.Throws<BusinessRuleValidationException>(action);
-            exception.BrokenRule.Should().BeOfType<TRule>();
-        }
-        
-        private static void AssertBrokenRule<TRule>(Action action)
-            where TRule : class, IBusinessRule
-        {
-            var exception = Assert.Throws<BusinessRuleValidationException>(action);
-            exception.BrokenRule.Should().BeOfType<TRule>();
         }
     }
 }
