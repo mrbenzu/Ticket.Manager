@@ -20,15 +20,11 @@ public class PlacesTests : TestBase
     [Fact]
     public void Place_Create_Success()
     {
-        // Arrange
-
-        // Act
         var place = Place.Create(Name,
             Street, Number, City,
             UnnumberedSectorCount, UnnumberedSeatsInSectorCount,
             SectorCount, RowCount, SeatsInRowsCount);
-
-        // Assert
+        
         place.Name.Should().Be(Name);
         place.Address.Street.Should().Be(Street);
         place.Address.Number.Should().Be(Number);

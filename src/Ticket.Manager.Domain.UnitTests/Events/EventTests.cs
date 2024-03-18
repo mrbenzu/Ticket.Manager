@@ -34,7 +34,7 @@ namespace Ticket.Manager.Domain.UnitTests.Events
              @event.SeatsMap.SectorCount.Should().Be(SectorCount);
              @event.SeatsMap.RowsCount.Should().Be(RowsCount);
              @event.SeatsMap.SeatsInRowCount.Should().Be(SeatsInRowCount);
-
+             
             var eventCreatedEvent = GetDomainEvent<EventCreatedEvent>( @event);
             eventCreatedEvent.Should().NotBeNull();
             eventCreatedEvent?.EventId.Should().Be(@event.Id);
