@@ -67,8 +67,8 @@ public class Seat : Entity, IAggregateRoot
         
         IsReserved = true;
         ReservedTo = isLongTimeReservation
-            ? SystemClock.Now.AddMinutes(DefaultReservationTimeInMinutes)
-            : SystemClock.Now.AddMinutes(DefaultExtendedReservationTimeInMinutes);
+            ? SystemClock.Now.AddMinutes(DefaultExtendedReservationTimeInMinutes)
+            : SystemClock.Now.AddMinutes(DefaultReservationTimeInMinutes);
         UserId = userId;
         
         AddDomainEvent(new SeatReservedEvent(Id));
