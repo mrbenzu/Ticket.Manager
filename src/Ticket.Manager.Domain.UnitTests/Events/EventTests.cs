@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Ticket.Manager.Domain.Common;
 using Ticket.Manager.Domain.Events;
 using Ticket.Manager.Domain.Events.BusinessRules;
 using Ticket.Manager.Domain.Events.Events;
@@ -10,8 +11,8 @@ namespace Ticket.Manager.Domain.UnitTests.Events
     public class EventTests : TestBase
     {
         private const string EventName = "Test Event";
-        private readonly DateTime _startDate = new(2024, 03, 17);
-        private readonly DateTime _startOfSalesDate = new(2024, 03, 18);
+        private readonly DateTime _startDate = SystemClock.Now;
+        private readonly DateTime _startOfSalesDate = SystemClock.Now.AddDays(1);
         private readonly Guid _placeId = Guid.NewGuid();
         private const int UnnumberedSeatsSectorCount = 2;
         private const int UnnumberedSeatsInSectorCount = 100;
@@ -53,7 +54,7 @@ namespace Ticket.Manager.Domain.UnitTests.Events
         [Fact]
         public void Event_Create_StartOfSalesDateIsEarlierThanStartDate_Failed()
         {
-            var startOfSalesDate = new DateTime(2024, 03, 17);
+            var startOfSalesDate = SystemClock.Now;
             var startDate = startOfSalesDate.AddDays(1);
             
             AssertBrokenRule<EventStartOfSalesDateCannotBeEarlierThanStartDateRule>(() => Event.Create(EventName, startDate, startOfSalesDate, _placeId,
