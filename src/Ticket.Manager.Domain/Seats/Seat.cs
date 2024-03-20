@@ -58,11 +58,11 @@ public class Seat : Entity, IAggregateRoot
 
     public void Reserve(Guid userId, List<int> reservedSeatNumbersInRow, bool isLongTimeReservation = false)
     {
+        CheckRule(new SeatCannotBeSoldRule(IsSold));
+        CheckRule(new SeatCannotBeWithdrawnRule(IsWithdrawn));
         CheckRule(new SeatCannotBeAlreadyReservedByUserRule(UserId, userId));
         CheckRule(new SeatCannotBeReservedRule(IsReserved, ReservedTo));
         CheckRule(new CannotLeaveEmptySeatNearReservedRule(SeatDetails,  reservedSeatNumbersInRow));
-        CheckRule(new SeatCannotBeSoldRule(IsSold));
-        CheckRule(new SeatCannotBeWithdrawnRule(IsWithdrawn));
         CheckRule(new SeatCannotBeSuspendedRule(IsSuspended));
         
         IsReserved = true;
