@@ -183,5 +183,77 @@ public class SeatTests : TestBase
         seatReservedEvent.Should().BeNull();
     }
     
+    [Fact]
+    public void Seat_ExtendReservationTime_Success()
+    {
+        var userId = Guid.NewGuid();
+        var seat = CreateSeat();
+        SystemClock.Set(new DateTime(2024, 03, 20, 20, 00, 00));
+        var expectedReservedTo = SystemClock.Now.AddMinutes(15);
+
+        seat.Reserve(userId, []);
+
+        seat.IsReserved.Should().BeTrue();
+        seat.ReservedTo.Should().Be(expectedReservedTo);
+        seat.UserId.Should().Be(userId);
+        
+        seat.ClearDomainEvents();
+        
+        SystemClock.Reset();
+        SystemClock.Set(new DateTime(2024, 03, 20, 20, 15, 00));
+        expectedReservedTo = SystemClock.Now.AddMinutes(15);
+        
+        seat.ExtendReservationTime(userId);
+        seat.IsReserved.Should().BeTrue();
+        seat.ReservedTo.Should().Be(expectedReservedTo);
+        seat.UserId.Should().Be(userId);
+    }
+    
+    [Fact]
+    public void Seat_ExtendReservationTime_SeatCannotBeSoldRule_Failed()
+    {
+        var userId = Guid.NewGuid();
+        var seat = CreateSeat();
+        SystemClock.Set(new DateTime(2024, 03, 20, 20, 00, 00));
+        var expectedReservedTo = SystemClock.Now.AddMinutes(15);
+
+        seat.Reserve(userId, []);
+
+        seat.IsReserved.Should().BeTrue();
+        seat.ReservedTo.Should().Be(expectedReservedTo);
+        seat.UserId.Should().Be(userId);
+        
+        seat.Sell(userId);
+        seat.ClearDomainEvents();
+        
+        AssertBrokenRule<SeatCannotBeSoldRule>(() => seat.ExtendReservationTime(userId));
+        
+        var seatReservedEvent = GetDomainEvent<SeatReservedEvent>(seat);
+        seatReservedEvent.Should().BeNull();
+    }
+    
+    [Fact]
+    public void Seat_ExtendReservationTime_SeatHasToBeReservedByUserRule_Failed()
+    {
+        var userId = Guid.NewGuid();
+        var userId2 = Guid.NewGuid();
+        var seat = CreateSeat();
+        SystemClock.Set(new DateTime(2024, 03, 20, 20, 00, 00));
+        var expectedReservedTo = SystemClock.Now.AddMinutes(15);
+
+        seat.Reserve(userId, []);
+
+        seat.IsReserved.Should().BeTrue();
+        seat.ReservedTo.Should().Be(expectedReservedTo);
+        seat.UserId.Should().Be(userId);
+        
+        seat.ClearDomainEvents();
+        
+        AssertBrokenRule<SeatHasToBeReservedByUserRule>(() => seat.ExtendReservationTime(userId2));
+        
+        var seatReservedEvent = GetDomainEvent<SeatReservedEvent>(seat);
+        seatReservedEvent.Should().BeNull();
+    }
+    
     private Seat CreateSeat() => Seat.Create(_eventId, IsUnnumberedSeat, Sector, RowNumber, SeatNumber);
 }
