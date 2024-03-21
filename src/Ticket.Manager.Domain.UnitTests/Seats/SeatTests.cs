@@ -49,7 +49,7 @@ public class SeatTests : TestBase
     }
     
     [Fact]
-    public void Seat_Reserve_SeatCannotBeAlreadyReservedByUserRule_Failed()
+    public void Seat_Reserve_SeatCannotBeAlreadyReservedByUserRule_RuleIsBroken()
     {
         var userId = Guid.NewGuid();
         var seat = CreateSeat();
@@ -70,7 +70,7 @@ public class SeatTests : TestBase
     }
     
     [Fact]
-    public void Seat_Reserve_SeatCannotBeReservedRule_Failed()
+    public void Seat_Reserve_SeatCannotBeReservedRule_RuleIsBroken()
     {
         var userId = Guid.NewGuid();
         var userId2 = Guid.NewGuid();
@@ -95,7 +95,7 @@ public class SeatTests : TestBase
     }
     
     [Fact]
-    public void Seat_Reserve_CannotLeaveEmptySeatNearReservedRule_Left_Failed()
+    public void Seat_Reserve_CannotLeaveEmptySeatNearReservedRule_Left_RuleIsBroken()
     {
         var userId = Guid.NewGuid();
         var seat = CreateSeat();
@@ -110,7 +110,7 @@ public class SeatTests : TestBase
     }
     
     [Fact]
-    public void Seat_Reserve_CannotLeaveEmptySeatNearReservedRule_Right_Failed()
+    public void Seat_Reserve_CannotLeaveEmptySeatNearReservedRule_Right_RuleIsBroken()
     {
         var userId = Guid.NewGuid();
         var seat = CreateSeat();
@@ -125,7 +125,7 @@ public class SeatTests : TestBase
     }
     
     [Fact]
-    public void Seat_Reserve_SeatCannotBeSoldRule_Failed()
+    public void Seat_Reserve_SeatCannotBeSoldRule_RuleIsBroken()
     {
         var userId = Guid.NewGuid();
         var seat = CreateSeat();
@@ -148,7 +148,7 @@ public class SeatTests : TestBase
     }
     
     [Fact]
-    public void Seat_Reserve_SeatCannotBeWithdrawnRule_Failed()
+    public void Seat_Reserve_SeatCannotBeWithdrawnRule_RuleIsBroken()
     {
         var userId = Guid.NewGuid();
         var seat = CreateSeat();
@@ -166,7 +166,7 @@ public class SeatTests : TestBase
     }
     
     [Fact]
-    public void Seat_Reserve_SeatCannotBeSuspendedRule_Failed()
+    public void Seat_Reserve_SeatCannotBeSuspendedRule_RuleIsBroken()
     {
         var userId = Guid.NewGuid();
         var seat = CreateSeat();
@@ -210,7 +210,7 @@ public class SeatTests : TestBase
     }
     
     [Fact]
-    public void Seat_ExtendReservationTime_SeatCannotBeSoldRule_Failed()
+    public void Seat_ExtendReservationTime_SeatCannotBeSoldRule_RuleIsBroken()
     {
         var userId = Guid.NewGuid();
         var seat = CreateSeat();
@@ -233,7 +233,7 @@ public class SeatTests : TestBase
     }
     
     [Fact]
-    public void Seat_ExtendReservationTime_SeatHasToBeReservedByUserRule_Failed()
+    public void Seat_ExtendReservationTime_SeatHasToBeReservedByUserRule_RuleIsBroken()
     {
         var userId = Guid.NewGuid();
         var userId2 = Guid.NewGuid();

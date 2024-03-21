@@ -44,7 +44,7 @@ namespace Ticket.Manager.Domain.UnitTests.Events
         }
         
         [Fact]
-        public void Event_Create_InvalidName_Failed()
+        public void Event_Create_InvalidName_RuleIsBroken()
         {
             AssertBrokenRule<EventNameCannotBeNullOrWhiteSpaceRule>(() => Event.Create(string.Empty, _startDate, _startOfSalesDate, _placeId,
                 UnnumberedSeatsSectorCount, UnnumberedSeatsInSectorCount,
@@ -52,7 +52,7 @@ namespace Ticket.Manager.Domain.UnitTests.Events
         }
         
         [Fact]
-        public void Event_Create_StartOfSalesDateIsEarlierThanStartDate_Failed()
+        public void Event_Create_StartOfSalesDateIsEarlierThanStartDate_RuleIsBroken()
         {
             var startOfSalesDate = SystemClock.Now;
             var startDate = startOfSalesDate.AddDays(1);
@@ -76,7 +76,7 @@ namespace Ticket.Manager.Domain.UnitTests.Events
         }
 
         [Fact]
-        public void Event_Suspend_Failed()
+        public void Event_Suspend_RuleIsBroken()
         {
             var @event = CreateEvent();
             @event.Cancel();
@@ -99,7 +99,7 @@ namespace Ticket.Manager.Domain.UnitTests.Events
         }
         
         [Fact]
-        public void Event_Reopen_Failed()
+        public void Event_Reopen_RuleIsBroken()
         {
             var @event = CreateEvent();
         
@@ -121,7 +121,7 @@ namespace Ticket.Manager.Domain.UnitTests.Events
         }
 
         [Fact]
-        public void Event_Cancel_Failed()
+        public void Event_Cancel_RuleIsBroken()
         {
             var @event = CreateEvent();
         
