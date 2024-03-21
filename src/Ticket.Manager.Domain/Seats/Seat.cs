@@ -87,6 +87,7 @@ public class Seat : Entity, IAggregateRoot
         CheckRule(new SeatHasToBeReservedByUserRule(UserId, userId));
         
         IsReserved = false;
+        ReservedTo = default;
         UserId = Guid.Empty;
         
         AddDomainEvent(new ReservationCanceledEvent(Id));

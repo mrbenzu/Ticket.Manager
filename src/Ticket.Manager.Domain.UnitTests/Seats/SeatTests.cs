@@ -255,5 +255,63 @@ public class SeatTests : TestBase
         seatReservedEvent.Should().BeNull();
     }
     
+    [Fact]
+    public void Seat_CancelReservation_Success()
+    {
+        var userId = Guid.NewGuid();
+        var seat = CreateSeat();
+        SystemClock.Set(new DateTime(2024, 03, 20, 20, 00, 00));
+        var expectedReservedTo = SystemClock.Now.AddMinutes(15);
+
+        seat.Reserve(userId, []);
+        seat.IsReserved.Should().BeTrue();
+        seat.ReservedTo.Should().Be(expectedReservedTo);
+        seat.UserId.Should().Be(userId);
+        
+        var seatReservedEvent = GetDomainEvent<SeatReservedEvent>(seat);
+        seatReservedEvent.Should().NotBeNull();
+        seatReservedEvent?.SeatId.Should().Be(seat.Id);
+        
+        seat.ClearDomainEvents();
+        seat.CancelReservation(userId);
+        seat.IsReserved.Should().BeFalse();
+        seat.ReservedTo.Should().Be(default);
+        seat.UserId.Should().Be(Guid.Empty);
+        
+        var reservationCanceledEvent = GetDomainEvent<ReservationCanceledEvent>(seat);
+        reservationCanceledEvent.Should().NotBeNull();
+        reservationCanceledEvent?.SeatId.Should().Be(seat.Id);
+    }
+    
+    [Fact]
+    public void Seat_CancelReservation_SeatHasToBeReservedByUserRule_RuleIsBroken()
+    {
+        var userId = Guid.NewGuid();
+        var userId2 = Guid.NewGuid();
+        var seat = CreateSeat();
+        SystemClock.Set(new DateTime(2024, 03, 20, 20, 00, 00));
+        var expectedReservedTo = SystemClock.Now.AddMinutes(15);
+
+        seat.Reserve(userId, []);
+        seat.IsReserved.Should().BeTrue();
+        seat.ReservedTo.Should().Be(expectedReservedTo);
+        seat.UserId.Should().Be(userId);
+        
+        var seatReservedEvent = GetDomainEvent<SeatReservedEvent>(seat);
+        seatReservedEvent.Should().NotBeNull();
+        seatReservedEvent?.SeatId.Should().Be(seat.Id);
+        
+        seat.ClearDomainEvents();
+        
+        AssertBrokenRule<SeatHasToBeReservedByUserRule>(() => seat.CancelReservation(userId2));
+
+        seat.IsReserved.Should().BeTrue();
+        seat.ReservedTo.Should().Be(expectedReservedTo);
+        seat.UserId.Should().Be(userId);
+        
+        var reservationCanceledEvent = GetDomainEvent<ReservationCanceledEvent>(seat);
+        reservationCanceledEvent.Should().BeNull();
+    }
+    
     private Seat CreateSeat() => Seat.Create(_eventId, IsUnnumberedSeat, Sector, RowNumber, SeatNumber);
 }
