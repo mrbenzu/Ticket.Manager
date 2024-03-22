@@ -95,11 +95,11 @@ public class Seat : Entity, IAggregateRoot
     
     public void Sell(Guid userId)
     {
+        CheckRule(new SeatCannotBeWithdrawnRule(IsWithdrawn));
+        CheckRule(new SeatCannotBeSuspendedRule(IsSuspended));
         CheckRule(new SeatCannotBeSoldRule(IsSold));
         CheckRule(new SeatHasToBeReservedByUserRule(UserId, userId)); 
         CheckRule(new ReservationCannotExpiredRule(IsReserved, ReservedTo));
-        CheckRule(new SeatCannotBeWithdrawnRule(IsWithdrawn));
-        CheckRule(new SeatCannotBeSuspendedRule(IsSuspended));
         
         IsSold = true;
         UserId = userId;
