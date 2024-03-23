@@ -79,6 +79,7 @@ namespace Ticket.Manager.Domain.UnitTests.Events
         public void Event_Suspend_RuleIsBroken()
         {
             var @event = CreateEvent();
+            
             @event.Cancel();
             
             AssertBrokenRule<EventCannotSuspendCanceledEventRule>(() => @event.Suspend());
