@@ -81,7 +81,15 @@ Welcome to our microservices-based application! This project is designed using i
 - Ability to add events taking place at different locations.
 - Setting unique parameters for each location (e.g., venue capacity, seating maps).
 
-# 3. Roadmap
+# 3. Event Storming - Process Level
+
+## Event
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/1187aab7-a09f-4f29-804e-5cc601a31d79)
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/a5a3aa55-2ea1-4fd4-9ebb-5eb677781825)
+
+# 4. Roadmap
 
 List of tasks
 
