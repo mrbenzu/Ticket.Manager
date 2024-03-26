@@ -83,11 +83,49 @@ Welcome to our microservices-based application! This project is designed using i
 
 # 3. Event Storming - Process Level
 
-## Event
+# Event
 
-![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/1187aab7-a09f-4f29-804e-5cc601a31d79)
+## Create event
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/d17b9416-416f-440c-9bfa-e13923439e60)
+
+## Suspend event
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/e1b18d4c-3045-43a4-8b8b-fdd4f640c0a8)
+
+## Reopen event
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/7d598884-88c7-4d03-bdd2-7de117fd1603)
+
+## Cancel event
 
 ![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/a5a3aa55-2ea1-4fd4-9ebb-5eb677781825)
+
+# Seat
+
+## Reserve seat
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/6a0e41b4-1ad2-462f-8068-f0548c6864f2)
+
+## Withdraw seat
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/c1841218-ba93-484b-9491-41c580e7782a)
+
+## Clear basket
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/37f62419-d578-45e1-b527-86b1ad041998)
+
+# Order
+
+## Create order
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/9ed2eb3d-c6b2-4d20-ab52-6783318ac29a)
+
+# Ticket
+
+## Return ticket
+
+![image](https://github.com/mrbenzu/Ticket.Manager/assets/42185582/6627d662-676e-49a1-99f0-02bbfd3818a7)
 
 # 4. Roadmap
 
