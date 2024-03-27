@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Ticket.Manager.Domain.Events;
 using Ticket.Manager.Domain.Orders;
 using Ticket.Manager.Domain.Places;
+using Seat = Ticket.Manager.Domain.Seats.Seat;
 
 namespace Ticket.Manager.Infrastructure.Configuration;
 

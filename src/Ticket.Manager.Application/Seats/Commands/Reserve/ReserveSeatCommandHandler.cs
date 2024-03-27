@@ -9,8 +9,8 @@ public class ReserveSeatCommandHandler(ISeatRepository seatRepository) : IComman
     {
         var seat = await seatRepository.Get(command.SeatId, cancellationToken);
         var reservedSeatNumbersInRow = await seatRepository.GetReservedSeatNumbersInRow(seat.EventId, 
-            seat.SeatDetails.Sector, seat.SeatDetails.RowNumber, seat.SeatDetails.SeatNumber, cancellationToken);
+            seat.SeatDetails.Sector, seat.SeatDetails.RowNumber, cancellationToken);
         
-        seat.Reserve(command.UserId, reservedSeatNumbersInRow.ToList());
+        seat.Reserve(command.UserId, reservedSeatNumbersInRow);
     }
 }

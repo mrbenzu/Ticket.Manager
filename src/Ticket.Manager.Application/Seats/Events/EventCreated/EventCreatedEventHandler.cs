@@ -6,11 +6,13 @@ namespace Ticket.Manager.Application.Seats.Events.EventCreated;
 
 public class EventCreatedEventHandler(ISeatRepository seatRepository) : IDomainEventHandler<EventCreatedEvent>
 {
-    public async Task Handle(EventCreatedEvent @event, CancellationToken cancellationToken)
+    public Task Handle(EventCreatedEvent @event, CancellationToken cancellationToken)
     {
         var seats = GenerateSeats(@event);
 
-        await seatRepository.AddMany(seats, cancellationToken);
+        seatRepository.AddMany(seats, cancellationToken);
+        
+        return Task.CompletedTask;
     }
 
     private static IEnumerable<Seat> GenerateSeats(EventCreatedEvent @event)
