@@ -10,6 +10,5 @@ public class EventRepository(TicketManagerDbContext context) : IEventRepository
         context.Events.Add(@event);
 
     public async Task<Event?> Get(Guid id, CancellationToken cancellationToken) =>
-        await context.Events.FirstOrDefaultAsync(e => e.Id == id, cancellationToken);
-    
+        await context.Events.SingleAsync(e => e.Id == id, cancellationToken);
 }

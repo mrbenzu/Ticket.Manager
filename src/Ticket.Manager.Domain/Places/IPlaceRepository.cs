@@ -2,6 +2,6 @@
 
 public interface IPlaceRepository
 {
-    Task Add(Place place, CancellationToken cancellationToken);
+    void Add(Place place);
     Task<Place> Get(Guid id, CancellationToken cancellationToken);
 }
