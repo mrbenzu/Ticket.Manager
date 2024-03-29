@@ -2,7 +2,7 @@
 
 public interface IOrderRepository
 {
+    void Add(Order order);
+
     Task<Order> Get(Guid id, CancellationToken cancellationToken);
-    
-    Task Add(Order order, CancellationToken cancellationToken);
 }
