@@ -14,6 +14,6 @@ public class CreateEventCommandHandler(IEventRepository eventRepository, IPlaceR
             place.UnnumberedSeatsMap.SectorCount, place.UnnumberedSeatsMap.SeatsInSectorCount,
             place.SeatsMap.SectorCount, place.SeatsMap.RowsCount, place.SeatsMap.SeatsInRowCount);
         
-        eventRepository.Add(@event, cancellationToken);
+        eventRepository.Add(@event);
     }
 }

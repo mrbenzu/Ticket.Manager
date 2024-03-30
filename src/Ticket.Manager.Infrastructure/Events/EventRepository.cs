@@ -6,9 +6,9 @@ namespace Ticket.Manager.Infrastructure.Events;
 
 public class EventRepository(TicketManagerDbContext context) : IEventRepository
 {
-    public void Add(Event @event, CancellationToken cancellationToken) =>
+    public void Add(Event @event) =>
         context.Events.Add(@event);
 
-    public async Task<Event?> Get(Guid id, CancellationToken cancellationToken) =>
+    public async Task<Event> Get(Guid id, CancellationToken cancellationToken) =>
         await context.Events.SingleAsync(e => e.Id == id, cancellationToken);
 }

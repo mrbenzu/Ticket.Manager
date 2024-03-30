@@ -2,6 +2,6 @@
 
 public interface IEventRepository
 {
-    void Add(Event @event, CancellationToken cancellationToken);
-    Task<Event?> Get(Guid id, CancellationToken cancellationToken);
+    void Add(Event @event);
+    Task<Event> Get(Guid id, CancellationToken cancellationToken);
 }
