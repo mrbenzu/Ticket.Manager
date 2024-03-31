@@ -6,7 +6,7 @@ namespace Ticket.Manager.Infrastructure.Seats;
 
 public class SeatRepository(TicketManagerDbContext context) : ISeatRepository
 {
-    public void AddMany(IEnumerable<Seat> seats, CancellationToken cancellationToken) =>
+    public void AddMany(IEnumerable<Seat> seats) =>
         context.Seats.AddRange(seats);
     
     public async Task<Seat> Get(Guid id, CancellationToken cancellationToken) =>

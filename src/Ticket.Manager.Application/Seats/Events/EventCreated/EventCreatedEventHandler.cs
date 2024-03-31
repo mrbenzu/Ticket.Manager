@@ -10,7 +10,7 @@ public class EventCreatedEventHandler(ISeatRepository seatRepository) : IDomainE
     {
         var seats = GenerateSeats(@event);
 
-        seatRepository.AddMany(seats, cancellationToken);
+        seatRepository.AddMany(seats);
         
         return Task.CompletedTask;
     }

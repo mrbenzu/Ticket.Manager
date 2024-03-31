@@ -2,7 +2,7 @@
 
 public interface ISeatRepository
 {
-    void AddMany(IEnumerable<Seat> seats, CancellationToken cancellationToken);
+    void AddMany(IEnumerable<Seat> seats);
     
     Task<Seat> Get(Guid id, CancellationToken cancellationToken);
 
