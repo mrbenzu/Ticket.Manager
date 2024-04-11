@@ -10,7 +10,6 @@ builder.Services.AddMediatR(cfg =>
 });
 
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
