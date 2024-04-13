@@ -1,1 +1,4 @@
 @Ticket.Manager.API_HostAddress = http://localhost:5219
+
+##GET
+##POST
