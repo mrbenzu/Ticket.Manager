@@ -8,12 +8,12 @@ public static class OrderModule
 {
     public static void AddOrderEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/create", async (ISender sender, CreateOrderCommand command) => await sender.Send(command))
-            .WithName("Create")
+        app.MapPost("/order/create", async (ISender sender, CreateOrderCommand command) => await sender.Send(command))
+            .WithName("Order Create")
             .WithOpenApi();
         
-        app.MapPost("/return", async (ISender sender, ReturnOrderCommand command) => await sender.Send(command))
-            .WithName("Return")
+        app.MapPost("/order/return", async (ISender sender, ReturnOrderCommand command) => await sender.Send(command))
+            .WithName("Order Return")
             .WithOpenApi();
     }
 }

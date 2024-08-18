@@ -1,4 +1,7 @@
 using Ticket.Manager.API.Events;
+using Ticket.Manager.API.Orders;
+using Ticket.Manager.API.Places;
+using Ticket.Manager.API.Seats;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,5 +20,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.AddEventEndpoints();
+app.AddOrderEndpoints();
+app.AddPlaceEndpoints();
+app.AddSeatEndpoints();
 
 app.Run();

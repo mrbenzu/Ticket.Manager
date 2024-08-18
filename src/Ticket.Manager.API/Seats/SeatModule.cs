@@ -9,16 +9,16 @@ public static class SeatModule
 {
     public static void AddSeatEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/reserve", async (ISender sender, ReserveSeatCommand command) => await sender.Send(command))
-            .WithName("Reserve")
+        app.MapPost("/seat/reserve", async (ISender sender, ReserveSeatCommand command) => await sender.Send(command))
+            .WithName("Seat Reserve")
             .WithOpenApi();
         
-        app.MapPost("/cancelReservation", async (ISender sender, CancelReservationCommand command) => await sender.Send(command))
-            .WithName("CancelReservation")
+        app.MapPost("/seat/cancelReservation", async (ISender sender, CancelReservationCommand command) => await sender.Send(command))
+            .WithName("Seat Cancel Reservation")
             .WithOpenApi();
         
-        app.MapPost("/withdrawnSeat", async (ISender sender, WithdrawnSeatCommand command) => await sender.Send(command))
-            .WithName("WithdrawnSeat")
+        app.MapPost("/seat/withdrawnSeat", async (ISender sender, WithdrawnSeatCommand command) => await sender.Send(command))
+            .WithName("SeatWithdrawn Seat")
             .WithOpenApi();
     }
 }

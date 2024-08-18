@@ -7,8 +7,8 @@ public static class PlaceModule
 {
     public static void AddPlaceEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/create", async (ISender sender, CreatePlaceCommand command) => await sender.Send(command))
-            .WithName("Create")
+        app.MapPost("/place/create", async (ISender sender, CreatePlaceCommand command) => await sender.Send(command))
+            .WithName("Place Create")
             .WithOpenApi();
     }
 }

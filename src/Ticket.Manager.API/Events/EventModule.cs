@@ -13,32 +13,32 @@ public static class EventModule
 {
     public static void AddEventEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/create", async (ISender sender, CreateEventCommand command) => await sender.Send(command))
-            .WithName("Create")
+        app.MapPost("/event/create", async (ISender sender, CreateEventCommand command) => await sender.Send(command))
+            .WithName("Event Create")
             .WithOpenApi();
         
-        app.MapPost("/cancel", async (ISender sender, CancelEventCommand command) => await sender.Send(command))
-            .WithName("Cancel")
+        app.MapPost("/event/cancel", async (ISender sender, CancelEventCommand command) => await sender.Send(command))
+            .WithName("Event Cancel")
             .WithOpenApi();
         
-        app.MapPost("/suspend", async (ISender sender, SuspendEventCommand command) => await sender.Send(command))
-            .WithName("Suspend")
+        app.MapPost("/event/suspend", async (ISender sender, SuspendEventCommand command) => await sender.Send(command))
+            .WithName("Event Suspend")
             .WithOpenApi();
         
-        app.MapPost("/reopen", async (ISender sender, ReopenEventCommand command) => await sender.Send(command))
-            .WithName("Reopen")
+        app.MapPost("/event/reopen", async (ISender sender, ReopenEventCommand command) => await sender.Send(command))
+            .WithName("Event Reopen")
             .WithOpenApi();
         
-        app.MapPost("/changeName", async (ISender sender, ChangeNameCommand command) => await sender.Send(command))
-            .WithName("ChangeName")
+        app.MapPost("/event/changeName", async (ISender sender, ChangeNameCommand command) => await sender.Send(command))
+            .WithName("Event Change Name")
             .WithOpenApi();
         
-        app.MapPost("/changeStartDate", async (ISender sender, ChangeStartDateCommand command) => await sender.Send(command))
-            .WithName("ChangeStartDate")
+        app.MapPost("/event/changeStartDate", async (ISender sender, ChangeStartDateCommand command) => await sender.Send(command))
+            .WithName("Event Change Start Date")
             .WithOpenApi();
         
-        app.MapPost("/changeStartOfSalesDate", async (ISender sender, ChangeStartOfSalesDateCommand command) => await sender.Send(command))
-            .WithName("ChangeStartOfSalesDate")
+        app.MapPost("/event/changeStartOfSalesDate", async (ISender sender, ChangeStartOfSalesDateCommand command) => await sender.Send(command))
+            .WithName("Event Change Start Of Sales Date")
             .WithOpenApi();
     }
 }
